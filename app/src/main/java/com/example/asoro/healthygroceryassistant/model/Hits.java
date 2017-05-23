@@ -4,9 +4,7 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by asoro on 12.05.17.
- */
+
 
 public class Hits {
 

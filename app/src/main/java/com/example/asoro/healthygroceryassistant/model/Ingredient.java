@@ -7,10 +7,20 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class Ingredient {
-	@SerializedName("text")
-	String mText;
+	@SerializedName("uri")
+	String uri;
+
+	@SerializedName("quantity")
+	float quantity;
+
+	@SerializedName("measure")
+	Measure measure;
 
 	@SerializedName("weight")
-	String mWeight;
+	float mWeight;
+
+	@SerializedName("food")
+	Food food;
+
 
 }

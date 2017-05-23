@@ -35,7 +35,7 @@ class SearchResultsFragment : MvpFragment<SearchResultsView, SearchResultsPresen
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         initAdapter()
-        getPresenter().loadRecipes("chicken")
+        getPresenter().loadRecipes("pasta chicken")
 
     }
 

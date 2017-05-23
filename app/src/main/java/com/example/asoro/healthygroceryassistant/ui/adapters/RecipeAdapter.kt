@@ -33,13 +33,11 @@ class RecipeAdapter(private val recipes: List<Recipe>) : RecyclerView.Adapter<Re
    inner class RecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         var mRecipeTitle: TextView
-        var mDescription: TextView
         var mTeaserImage: ImageView
         var previewImgUrl: String?=null
 
         init {
             mRecipeTitle = itemView.findViewById(R.id.recipe_title) as TextView
-            mDescription = itemView.findViewById(R.id.recipe_description) as TextView
             mTeaserImage = itemView.findViewById(R.id.recipe_teaser_preview) as ImageView
         }
 

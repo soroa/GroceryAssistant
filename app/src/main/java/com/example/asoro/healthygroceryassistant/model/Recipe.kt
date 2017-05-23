@@ -4,10 +4,14 @@ import com.example.asoro.healthygroceryassistant.ui.adapters.Teasable
 import com.google.gson.annotations.SerializedName
 
 
-class Recipe: Teasable {
+class  Recipe: Teasable {
 
     @SerializedName("label")
     var name: String? = null
+        internal set
+
+    @SerializedName("uri")
+    var uri: String? = null
         internal set
 
     @SerializedName("ingredients")
@@ -17,7 +21,13 @@ class Recipe: Teasable {
     @SerializedName("image")
     var imageURL: String? = null
         internal set
+
+    @SerializedName("yield")
+    var servings: Int? = null
+        internal set
+
     @SerializedName("healthLabels")
     var healthLabels: List<String>? = null
         internal set
+
 }
