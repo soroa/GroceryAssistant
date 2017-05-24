@@ -2,9 +2,10 @@ package com.example.asoro.healthygroceryassistant.model
 
 import com.example.asoro.healthygroceryassistant.ui.adapters.Teasable
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 
-class  Recipe: Teasable {
+class  Recipe: Teasable, Serializable {
 
     @SerializedName("label")
     var name: String? = null
