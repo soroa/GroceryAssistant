@@ -5,4 +5,15 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="search">Search Recipes</string>
+    <string name="diets">Diets (Optional)</string>
+    <string name="health_labels">Health Label (Optional)</string>
+    <string name="alcohol_free">Alcohol Free</string>
+    <string name="fish_free">Fish free</string>
+    <string name="dairy_free">Dairy free</string>
+    <string name="gluten_free">Gluten free</string>
+    <string name="low_potassium">Low potassium</string>
+    <string name="paleo">Paleo</string>
+    <string name="peanut_free">Peanut free</string>
+    <string name="vegan">Vegan</string>
 </resources>

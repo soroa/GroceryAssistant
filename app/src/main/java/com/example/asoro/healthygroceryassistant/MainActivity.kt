@@ -10,7 +10,8 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import com.example.asoro.healthygroceryassistant.ui.search_results.SearchResultsFragment
+import com.example.asoro.healthygroceryassistant.ui.search.SearchFragment
+import com.example.asoro.healthygroceryassistant.ui.search.SearchLifecycleFragment
 
 class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -31,8 +32,9 @@ class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
         val navigationView = findViewById(R.id.nav_view) as NavigationView
         navigationView.setNavigationItemSelectedListener(this)
-
-        loadFragment(SearchResultsFragment())
+        getSupportActionBar()?.setDisplayShowTitleEnabled(false)
+        getSupportActionBar()?.hide();
+        loadFragment(SearchLifecycleFragment())
     }
 
 

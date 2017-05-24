@@ -16,7 +16,6 @@ class SearchResultsPresenterImpl(val mRecipesRepo: RecipesRepo) : MvpNullObjectB
         super.detachView(retainInstance)
     }
 
-
     override fun attachView(view: SearchResultsView) {
         super.attachView(view)
     }
@@ -24,9 +23,8 @@ class SearchResultsPresenterImpl(val mRecipesRepo: RecipesRepo) : MvpNullObjectB
     override fun loadNextSearchResultPage(nextPageUrl: String) {
     }
 
-
-    override fun loadRecipes(keyword: String, diet: String) {
-        val recipeObservable: Observable<List<Recipe>> = mRecipesRepo.getRecipes(keyword, diet)
+    override fun loadRecipes(keyword: String, diet: String, healthLabel:String) {
+        val recipeObservable: Observable<List<Recipe>> = mRecipesRepo.getRecipesRx(keyword, diet,healthLabel)
         recipeObservable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(Consumer { recipes ->
             view.showRecipes(recipes)
         })

@@ -1,5 +1,8 @@
 package com.example.asoro.healthygroceryassistant.ui.search
 
+import android.arch.lifecycle.LifecycleFragment
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -9,23 +12,30 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import com.example.asoro.healthygroceryassistant.MainActivity
 import com.example.asoro.healthygroceryassistant.R
-import com.example.asoro.healthygroceryassistant.RecipesRepo
 import com.example.asoro.healthygroceryassistant.inflate
 import com.example.asoro.healthygroceryassistant.model.Recipe
 import com.example.asoro.healthygroceryassistant.ui.search_results.SearchResultsFragment
+import com.example.asoro.healthygroceryassistant.ui.search_results.SearchResultsLifecycleFragment
 import com.example.asoro.healthygroceryassistant.util.KeyboardUtil
-import com.hannesdorfmann.mosby3.mvp.MvpFragment
 import kotlinx.android.synthetic.main.fragment_search.*
 
+class SearchLifecycleFragment : LifecycleFragment(), SearchView, View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
-class SearchFragment : MvpFragment<SearchView, SearchPresenter>(), SearchView, View.OnClickListener, RadioGroup.OnCheckedChangeListener {
     private var diet: String = ""
     private var healthLabel: String = ""
+    private var viewModel:SearchViewModel? =null
+
+
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return container?.inflate(R.layout.fragment_search)
     }
 
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProviders.of(this).get(SearchViewModel::class.java)
+    }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,7 +60,11 @@ class SearchFragment : MvpFragment<SearchView, SearchPresenter>(), SearchView, V
                 KeyboardUtil.hideKeyboard(activity)
                 if (!TextUtils.isEmpty(search_et.text)) {
                     showLoading(true)
-                    getPresenter().loadData(search_et.text.toString(), diet, healthLabel)
+                    viewModel?.loadData(search_et.text.toString(),diet,healthLabel)?.observe(this, Observer { recipes ->
+                        if (recipes != null) {
+                            showResults2(recipes)
+                        }
+                    })
                 }
             }
             diet_title.id -> {
@@ -67,7 +81,7 @@ class SearchFragment : MvpFragment<SearchView, SearchPresenter>(), SearchView, V
             when (group?.id) {
 
                 diets_radio_group_1.id -> {
-                   diet = (activity.findViewById(checkedId) as RadioButton).text.toString()
+                    diet = (activity.findViewById(checkedId) as RadioButton).text.toString()
                     clearRadioGroup(diets_radio_group_2)
                 }
                 diets_radio_group_2.id -> {
@@ -101,9 +115,6 @@ class SearchFragment : MvpFragment<SearchView, SearchPresenter>(), SearchView, V
         radioGroup.setOnCheckedChangeListener(this); //reset the listener
     }
 
-    override fun createPresenter(): SearchPresenter {
-        return SearchPresenterImpl(RecipesRepo())
-    }
 
     override fun showLoading(show: Boolean) {
         progress_bar.visibility = if (show) View.VISIBLE else View.GONE
@@ -118,5 +129,14 @@ class SearchFragment : MvpFragment<SearchView, SearchPresenter>(), SearchView, V
         (activity as MainActivity).loadFragment(SearchResultsFragment(recipes))
     }
 
+    fun showResults2(recipes: List<Recipe>) {
+
+        (activity as MainActivity).loadFragment(SearchResultsLifecycleFragment(recipes))
+    }
+
+
 
 }
+
+
+

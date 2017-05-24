@@ -1,17 +1,24 @@
 package com.example.asoro.healthygroceryassistant
 
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
+import android.text.TextUtils
+import com.example.asoro.healthygroceryassistant.model.Hits
 import com.example.asoro.healthygroceryassistant.model.Recipe
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import io.reactivex.Observable
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 
 
 class RecipesRepo {
-    private var recipeAPIService:RecipesAPIService
+    private var recipeAPIService: RecipesAPIService
 
-    init{
+    init {
         val retrofit = Retrofit.Builder()//
                 .baseUrl(RecipesAPIService.URL)//
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//
@@ -21,9 +28,18 @@ class RecipesRepo {
     }
 
 
-    fun getRecipes(keyword: String, diet: String): Observable<List<Recipe>> {
-        return recipeAPIService.getRecipes(RecipesAPIService.APPLICATION_ID, RecipesAPIService.APPLICATION_KEY, keyword,
-                diet, RECIPES_LOAD_BATCH).map { hitsResponse ->
+    fun getRecipesRx(keyword: String, diet: String, healthLabel: String): Observable<List<Recipe>> {
+        val observable: Observable<Response<Hits>>
+        if (!TextUtils.isEmpty(diet) && !TextUtils.isEmpty(healthLabel)) {
+            observable = recipeAPIService.getRecipes(RecipesAPIService.APPLICATION_ID, RecipesAPIService.APPLICATION_KEY, keyword,
+                    diet, healthLabel, RECIPES_LOAD_BATCH)
+        } else if (!TextUtils.isEmpty(diet) && TextUtils.isEmpty(healthLabel)) {
+            observable = recipeAPIService.getRecipes(RecipesAPIService.APPLICATION_ID, RecipesAPIService.APPLICATION_KEY, keyword,
+                    diet, RECIPES_LOAD_BATCH)
+        } else {
+            observable = recipeAPIService.getRecipes(RecipesAPIService.APPLICATION_ID, RecipesAPIService.APPLICATION_KEY, keyword, RECIPES_LOAD_BATCH)
+        }
+        return observable.map { hitsResponse ->
             if (hitsResponse.isSuccessful) {
                 val res = hitsResponse.body()
                 val recipes = ArrayList<Recipe>()
@@ -36,6 +52,42 @@ class RecipesRepo {
             }
         }
     }
+
+    fun getRecipes(keyword: String, diet: String, healthLabel: String): LiveData<List<Recipe>> {
+
+        var call: Call<Hits>? = null
+        var result: MutableLiveData<List<Recipe>> = MutableLiveData()
+        if (!TextUtils.isEmpty(diet) && !TextUtils.isEmpty(healthLabel)) {
+            call = recipeAPIService.getRecipesLiveData(RecipesAPIService.APPLICATION_ID, RecipesAPIService.APPLICATION_KEY, keyword,
+                    diet, healthLabel, RECIPES_LOAD_BATCH)
+        } else if (!TextUtils.isEmpty(diet) && TextUtils.isEmpty(healthLabel)) {
+            call = recipeAPIService.getRecipesLiveData(RecipesAPIService.APPLICATION_ID, RecipesAPIService.APPLICATION_KEY, keyword,
+                    diet, RECIPES_LOAD_BATCH)
+        } else {
+            call = recipeAPIService.getRecipesLiveData(RecipesAPIService.APPLICATION_ID, RecipesAPIService.APPLICATION_KEY, keyword, RECIPES_LOAD_BATCH)
+        }
+        recipeAPIService.getRecipesLiveData(RecipesAPIService.APPLICATION_ID, RecipesAPIService.APPLICATION_KEY, keyword, RECIPES_LOAD_BATCH).enqueue(object : Callback<Hits> {
+            override fun onFailure(call: Call<Hits>?, t: Throwable?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onResponse(call: Call<Hits>?, response: Response<Hits>?) {
+                if (response?.isSuccessful!!) {
+                    val res = response.body()
+                    val recipes = ArrayList<Recipe>()
+                    for (h in res.hits) {
+                        recipes.add(h.recipe)
+                    }
+                    result.value = recipes
+                } else {
+
+                }
+            }
+        })
+
+        return result
+    }
+
 
     companion object {
         val RECIPES_LOAD_BATCH = 50
