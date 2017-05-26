@@ -6,7 +6,6 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recipes_search_results_rv"
         android:scrollbars="vertical"
-        android:paddingTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

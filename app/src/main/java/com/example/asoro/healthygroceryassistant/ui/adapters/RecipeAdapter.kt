@@ -2,7 +2,6 @@ package com.example.asoro.healthygroceryassistant.ui.adapters
 
 import android.graphics.Color
 import android.support.v7.widget.RecyclerView
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
@@ -35,34 +34,27 @@ class RecipeAdapter(private val recipes: List<Recipe>, private val onRecipeTease
 
     override fun getItemCount() = recipes.size
 
-    inner class RecipeViewHolder(itemView: View, val onRecipeTeaserClickListener: OnRecipeTeaserClickListener) : RecyclerView.ViewHolder(itemView), OnAddToShoppingCartPressedListener, OnAddToFavoritesListener, View.OnTouchListener {
+    inner class RecipeViewHolder(itemView: View, val onRecipeTeaserClickListener: OnRecipeTeaserClickListener) : RecyclerView.ViewHolder(itemView), View.OnClickListener, OnAddToShoppingCartPressedListener, OnAddToFavoritesListener {
 
 
-        override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-            when (event?.getAction()) {
-                MotionEvent.ACTION_DOWN -> {
-                    when (v) {
-                        itemView -> {
-                            onRecipeTeaserClickListener.showRecipeDetail(recipe!!)
-                            return true
-                        }
-                        favoriteBtn -> {
-                            onAddToFavorite(recipe as Recipe)
-                            return true
-                        }
-                        cartBtn -> {
-                            onAddToShoppingCart(recipe as Recipe)
-                            return true
-                        }
-                    }
-                    return true
+        override fun onClick(v: View?) {
+
+            when (v) {
+
+                favoriteBtn -> {
+                    onAddToFavorite(recipe as Recipe)
+                    return
                 }
-                MotionEvent.ACTION_UP -> {
-                    return true//this consumes the entire touch event
-
+                cartBtn -> {
+                    onAddToShoppingCart(recipe as Recipe)
+                    return
+                }
+                mTeaserImage -> {
+                    onRecipeTeaserClickListener.showRecipeDetail(recipe!!)
+                    return
                 }
             }
-            return false
+
         }
 
         var recipe: Recipe? = null
@@ -72,28 +64,29 @@ class RecipeAdapter(private val recipes: List<Recipe>, private val onRecipeTease
         var previewImgUrl: String? = null
         var cartBtn: ImageButton
         var favoriteBtn: ImageButton
-
+        var isFavorite: Boolean=false
+        var isInShoppingCart: Boolean=false
         init {
+            itemView.setOnClickListener(this)
             mRecipeTitle = itemView.findViewById(R.id.recipe_title) as TextView
             mTeaserImage = itemView.findViewById(R.id.recipe_teaser_preview) as ImageView
+            mTeaserImage.setOnClickListener(this)
             cartBtn = itemView.findViewById(R.id.recipe_teaser_cart_btn) as ImageButton
-            cartBtn.setOnTouchListener(this)
-
+            cartBtn.setOnClickListener(this)
             favoriteBtn = itemView.findViewById(R.id.recipe_teaser_favorite_btn) as ImageButton
-            favoriteBtn.setOnTouchListener(this)
-            itemView.setOnTouchListener(this)
+            favoriteBtn.setOnClickListener(this)
         }
 
-
-
         override fun onAddToFavorite(recipe: Recipe) {
-
-            favoriteBtn.setImageResource(if (favoriteBtn.isActivated) R.mipmap.ic_favorite_black_24dp else R.mipmap.ic_favorite_black_24dp)
+            isFavorite = !isFavorite
+            favoriteBtn.setImageResource(if (isFavorite) R.mipmap.ic_favorite_black_24dp else R.mipmap.ic_favorite_border_black_24dp)
+            favoriteBtn.setColorFilter(if(isFavorite) Color.RED else Color.WHITE)
             onAddToFavoriteListener.onAddToFavorite(recipe)
         }
 
         override fun onAddToShoppingCart(recipe: Recipe) {
-            cartBtn.setColorFilter(Color.rgb(127, 255, 0))
+            isInShoppingCart= !isInShoppingCart
+            cartBtn.setColorFilter(if(isInShoppingCart) Color.GREEN else Color.WHITE)
             addToShoppingCartPressedListener.onAddToShoppingCart(recipe)
         }
     }
