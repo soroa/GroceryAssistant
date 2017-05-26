@@ -1,6 +1,8 @@
-package com.example.asoro.healthygroceryassistant.ui
+package com.example.asoro.healthygroceryassistant.ui.search_results
 
 import com.example.asoro.healthygroceryassistant.model.Recipe
+
+
 
 interface OnRecipeTeaserClickListener{
 

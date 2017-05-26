@@ -15,8 +15,13 @@ class Ingredient :Serializable{
     @SerializedName("measure")
     internal var measure: Measure? = null
 
+
+    @SerializedName("text")
+     var text: String? = null
+        internal set
+
     @SerializedName("weight")
-    internal var mWeight: Float = 0.toFloat()
+    internal var weight: Float = 0.toFloat()
 
     @SerializedName("food")
     internal var food: Food? = null

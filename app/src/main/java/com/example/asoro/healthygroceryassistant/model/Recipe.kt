@@ -23,12 +23,17 @@ class  Recipe: Teasable, Serializable {
     var imageURL: String? = null
         internal set
 
+    @SerializedName("url")
+    var url: String? = null
+        internal set
+
     @SerializedName("yield")
-    var servings: Int? = null
+    var servings: Float? = null
         internal set
 
     @SerializedName("healthLabels")
     var healthLabels: List<String>? = null
         internal set
+
 
 }

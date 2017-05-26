@@ -10,10 +10,10 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import com.example.asoro.healthygroceryassistant.ui.search.SearchFragment
 import com.example.asoro.healthygroceryassistant.ui.search.SearchLifecycleFragment
+import com.example.asoro.healthygroceryassistant.ui.search_results.SearchResultsLifecycleFragment
 
-class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, SearchLifecycleFragment.OnRecipeSearchEvent {
 
     //TODO Recipe repo from dagger
 
@@ -54,16 +54,10 @@ class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         val id = item.itemId
-
-
         if (id == R.id.action_settings) {
             return true
         }
-
         return super.onOptionsItemSelected(item)
     }
 
@@ -72,24 +66,21 @@ class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         val fragmentTransaction = supportFragmentManager.beginTransaction();
         fragmentTransaction.setCustomAnimations(
                 R.anim.abc_fade_in, R.anim.abc_fade_out, R.anim.abc_popup_enter, R.anim.abc_popup_exit);
-        fragmentTransaction.replace(R.id.frag_container, f);
+        fragmentTransaction.replace(R.id.frag_container_search, f);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        // Handle navigation view item clicks here.
         val id = item.itemId
-
-        if (id == R.id.nav_camera) {
+        if (id == R.id.search) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.favorites) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.shopping_list) {
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.intermittent_fasting) {
 
         }
 
@@ -97,5 +88,10 @@ class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         drawer.closeDrawer(GravityCompat.START)
         return true
     }
+
+    override fun onRecipeSearchEvent() {
+        loadFragment(SearchResultsLifecycleFragment())
+    }
+
 
 }

@@ -8,12 +8,13 @@
     <string name="search">Search Recipes</string>
     <string name="diets">Diets (Optional)</string>
     <string name="health_labels">Health Label (Optional)</string>
-    <string name="alcohol_free">Alcohol Free</string>
-    <string name="fish_free">Fish free</string>
-    <string name="dairy_free">Dairy free</string>
-    <string name="gluten_free">Gluten free</string>
-    <string name="low_potassium">Low potassium</string>
-    <string name="paleo">Paleo</string>
-    <string name="peanut_free">Peanut free</string>
-    <string name="vegan">Vegan</string>
+    <string name="alcohol_free">alcohol-free</string>
+    <string name="fish_free">fish-free</string>
+    <string name="dairy_free">dairy-free</string>
+    <string name="gluten_free">gluten-free</string>
+    <string name="low_potassium">low-potassium</string>
+    <string name="paleo">paleo</string>
+    <string name="peanut_free">peanut-free</string>
+    <string name="vegan">vegan</string>
+    <string name="vegetarian">vsegetarian</string>
 </resources>

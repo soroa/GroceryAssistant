@@ -58,17 +58,20 @@ class RecipesRepo {
         var call: Call<Hits>? = null
         var result: MutableLiveData<List<Recipe>> = MutableLiveData()
         if (!TextUtils.isEmpty(diet) && !TextUtils.isEmpty(healthLabel)) {
-            call = recipeAPIService.getRecipesLiveData(RecipesAPIService.APPLICATION_ID, RecipesAPIService.APPLICATION_KEY, keyword,
+            call = recipeAPIService.getRecipesWithDietAndHealthLiveData(RecipesAPIService.APPLICATION_ID, RecipesAPIService.APPLICATION_KEY, keyword,
                     diet, healthLabel, RECIPES_LOAD_BATCH)
         } else if (!TextUtils.isEmpty(diet) && TextUtils.isEmpty(healthLabel)) {
-            call = recipeAPIService.getRecipesLiveData(RecipesAPIService.APPLICATION_ID, RecipesAPIService.APPLICATION_KEY, keyword,
+            call = recipeAPIService.getRecipesWithDietLiveData(RecipesAPIService.APPLICATION_ID, RecipesAPIService.APPLICATION_KEY, keyword,
                     diet, RECIPES_LOAD_BATCH)
+        } else if (TextUtils.isEmpty(diet) && !TextUtils.isEmpty(healthLabel)) {
+            call = recipeAPIService.getRecipesWithHealthLiveData(RecipesAPIService.APPLICATION_ID, RecipesAPIService.APPLICATION_KEY, keyword,
+                    healthLabel, RECIPES_LOAD_BATCH)
         } else {
             call = recipeAPIService.getRecipesLiveData(RecipesAPIService.APPLICATION_ID, RecipesAPIService.APPLICATION_KEY, keyword, RECIPES_LOAD_BATCH)
         }
-        recipeAPIService.getRecipesLiveData(RecipesAPIService.APPLICATION_ID, RecipesAPIService.APPLICATION_KEY, keyword, RECIPES_LOAD_BATCH).enqueue(object : Callback<Hits> {
+        call.enqueue(object : Callback<Hits> {
             override fun onFailure(call: Call<Hits>?, t: Throwable?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                result.value= null
             }
 
             override fun onResponse(call: Call<Hits>?, response: Response<Hits>?) {
@@ -80,14 +83,12 @@ class RecipesRepo {
                     }
                     result.value = recipes
                 } else {
-
+                    result.value =null
                 }
             }
         })
-
         return result
     }
-
 
     companion object {
         val RECIPES_LOAD_BATCH = 50

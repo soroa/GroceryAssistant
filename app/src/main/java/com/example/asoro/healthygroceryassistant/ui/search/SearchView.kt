@@ -8,7 +8,7 @@ interface SearchView : MvpView{
 
     fun showLoading(show:Boolean)
 
-    fun showError()
+    fun showError(msg:String)
 
     fun showResults(recipes:List<Recipe>)
 

@@ -10,12 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.RadioGroup
-import com.example.asoro.healthygroceryassistant.MainActivity
 import com.example.asoro.healthygroceryassistant.R
 import com.example.asoro.healthygroceryassistant.inflate
 import com.example.asoro.healthygroceryassistant.model.Recipe
-import com.example.asoro.healthygroceryassistant.ui.search_results.SearchResultsFragment
-import com.example.asoro.healthygroceryassistant.ui.search_results.SearchResultsLifecycleFragment
 import com.example.asoro.healthygroceryassistant.util.KeyboardUtil
 import kotlinx.android.synthetic.main.fragment_search.*
 
@@ -23,18 +20,15 @@ class SearchLifecycleFragment : LifecycleFragment(), SearchView, View.OnClickLis
 
     private var diet: String = ""
     private var healthLabel: String = ""
-    private var viewModel:SearchViewModel? =null
-
-
+    private var viewModel: SearchViewModel? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return container?.inflate(R.layout.fragment_search)
     }
 
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(SearchViewModel::class.java)
+        viewModel = ViewModelProviders.of(activity).get(SearchViewModel::class.java)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -55,22 +49,30 @@ class SearchLifecycleFragment : LifecycleFragment(), SearchView, View.OnClickLis
     }
 
     override fun onClick(v: View?) {
-        when (v?.id) {
-            search_recipes_button.id -> {
+        when (v) {
+            search_recipes_button -> {
                 KeyboardUtil.hideKeyboard(activity)
                 if (!TextUtils.isEmpty(search_et.text)) {
                     showLoading(true)
-                    viewModel?.loadData(search_et.text.toString(),diet,healthLabel)?.observe(this, Observer { recipes ->
+                    viewModel?.loadData(search_et.text.toString(), diet, healthLabel)?.observe(this, Observer { recipes ->
+                        showLoading(false)
                         if (recipes != null) {
-                            showResults2(recipes)
+                            if (recipes.isEmpty()) {
+                                showError("No results found that match your search");
+                            } else {
+                                (false)
+                                showResults2()
+                            }
+                        } else {
+                            showError("Network error");
                         }
                     })
                 }
             }
-            diet_title.id -> {
+            diet_title -> {
                 diets_radio_group.visibility = if (diets_radio_group.visibility == View.VISIBLE) View.GONE else View.VISIBLE
             }
-            health_labels_title.id -> {
+            health_labels_title -> {
                 health_label_radio_group.visibility = if (health_label_radio_group.visibility == View.VISIBLE) View.GONE else View.VISIBLE
             }
         }
@@ -79,7 +81,6 @@ class SearchLifecycleFragment : LifecycleFragment(), SearchView, View.OnClickLis
     override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
         if (checkedId != -1) {
             when (group?.id) {
-
                 diets_radio_group_1.id -> {
                     diet = (activity.findViewById(checkedId) as RadioButton).text.toString()
                     clearRadioGroup(diets_radio_group_2)
@@ -87,7 +88,6 @@ class SearchLifecycleFragment : LifecycleFragment(), SearchView, View.OnClickLis
                 diets_radio_group_2.id -> {
                     diet = (activity.findViewById(checkedId) as RadioButton).text.toString()
                     clearRadioGroup(diets_radio_group_1)
-
                 }
                 health_label_radio_group_1.id -> {
                     healthLabel = (activity.findViewById(checkedId) as RadioButton).text.toString()
@@ -106,36 +106,36 @@ class SearchLifecycleFragment : LifecycleFragment(), SearchView, View.OnClickLis
                 }
             }
         }
-
     }
 
     fun clearRadioGroup(radioGroup: RadioGroup) {
-        radioGroup.setOnCheckedChangeListener(null); // remove the listener before clearing so we don't throw that stackoverflow exception(like Vladimir Volodin pointed out)
-        radioGroup.clearCheck(); // clear the second RadioGroup!
-        radioGroup.setOnCheckedChangeListener(this); //reset the listener
+        radioGroup.setOnCheckedChangeListener(null)
+        radioGroup.clearCheck()
+        radioGroup.setOnCheckedChangeListener(this)
     }
-
 
     override fun showLoading(show: Boolean) {
         progress_bar.visibility = if (show) View.VISIBLE else View.GONE
     }
 
-    override fun showError() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun showError(msg: String) {
+        error_view.setText(msg)
+        if (error_view.visibility == View.GONE){
+            error_view.visibility = View.VISIBLE
+        }
     }
 
     override fun showResults(recipes: List<Recipe>) {
-        //todo
-        (activity as MainActivity).loadFragment(SearchResultsFragment(recipes))
+        (activity as OnRecipeSearchEvent).onRecipeSearchEvent()
     }
 
-    fun showResults2(recipes: List<Recipe>) {
-
-        (activity as MainActivity).loadFragment(SearchResultsLifecycleFragment(recipes))
+    fun showResults2() {
+        (activity as OnRecipeSearchEvent).onRecipeSearchEvent()
     }
 
-
-
+    interface OnRecipeSearchEvent {
+        fun onRecipeSearchEvent()
+    }
 }
 
 

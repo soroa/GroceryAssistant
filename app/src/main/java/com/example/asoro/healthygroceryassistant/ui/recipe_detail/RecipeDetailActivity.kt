@@ -1,7 +1,6 @@
 package com.example.asoro.healthygroceryassistant.ui.recipe_detail
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import com.example.asoro.healthygroceryassistant.R
 import com.example.asoro.healthygroceryassistant.loadImg
@@ -11,13 +10,25 @@ import kotlinx.android.synthetic.main.activity_recipe_detail.*
 
 
 class RecipeDetailActivity: AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    private var recipe:Recipe? =null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe_detail)
-        val recipe = intent.getSerializableExtra("recipe") as Recipe
-        teaser_preview_details.loadImg(recipe.imageURL!!)
+        getSupportActionBar()?.hide();
+        recipe = intent.getSerializableExtra("recipe") as Recipe
+        teaser_preview_details.loadImg(recipe?.imageURL!!)
+        recipe_title.setText(recipe?.name)
+        var ingredients = ""
+        for(i in recipe?.ingredientList!!){
+            ingredients = ingredients + i.text + " \n"
+        }
+
+        recipe_ingredients.setText(ingredients)
+        recipe_url.setText(recipe?.url)
 
     }
+
 
 
 

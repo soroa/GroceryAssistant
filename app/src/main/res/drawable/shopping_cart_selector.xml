@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:card_view="http://schemas.android.com/aapt">
+    <item android:state_activated="false"
+        android:tint="#ffffff"
+        />
+    <item
+        android:state_activated="false"
+        android:tint="#00FF00"
+        />
+
+</selector>

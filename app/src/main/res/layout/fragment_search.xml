@@ -37,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="TextView"
+        android:textColor="#FF0000"
         android:textAlignment="center"
         android:visibility="gone"
         tools:visibility="visible" />
@@ -210,7 +211,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Vegetarian" />
+                android:text="@string/vegetarian" />
 
         </RadioGroup>
     </android.support.v7.widget.LinearLayoutCompat>

@@ -33,11 +33,16 @@ interface RecipesAPIService {
                    @Query("q") query: String, @Query("to") number: Int): Call<Hits>
 
     @GET("search")
-    fun getRecipesLiveData(@Query("app_id") appId: String, @Query("app_key") appKey: String,
+    fun getRecipesWithDietLiveData(@Query("app_id") appId: String, @Query("app_key") appKey: String,
                    @Query("q") query: String, @Query("diet") diet: String, @Query("to") number: Int): Call<Hits>
 
+
     @GET("search")
-    fun getRecipesLiveData(@Query("app_id") appId: String, @Query("app_key") appKey: String,
+    fun getRecipesWithHealthLiveData(@Query("app_id") appId: String, @Query("app_key") appKey: String,
+                                   @Query("q") query: String, @Query("health") health: String, @Query("to") number: Int): Call<Hits>
+
+    @GET("search")
+    fun getRecipesWithDietAndHealthLiveData(@Query("app_id") appId: String, @Query("app_key") appKey: String,
                    @Query("q") query: String, @Query("diet") diet: String, @Query("health") healthLabel: String, @Query("to") number:   Int): Call<Hits>
 
 
