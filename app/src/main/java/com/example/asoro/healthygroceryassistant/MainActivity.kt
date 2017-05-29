@@ -10,12 +10,17 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import com.example.asoro.healthygroceryassistant.dagger.SearchComponent
 import com.example.asoro.healthygroceryassistant.ui.search.SearchLifecycleFragment
 import com.example.asoro.healthygroceryassistant.ui.search_results.SearchResultsLifecycleFragment
+
 
 class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, SearchLifecycleFragment.OnRecipeSearchEvent {
 
     //TODO Recipe repo from dagger
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +38,10 @@ class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         val navigationView = findViewById(R.id.nav_view) as NavigationView
         navigationView.setNavigationItemSelectedListener(this)
         getSupportActionBar()?.setDisplayShowTitleEnabled(false)
-        getSupportActionBar()?.hide();
+        getSupportActionBar()?.hide()
+
+
+
         loadFragment(SearchLifecycleFragment())
     }
 

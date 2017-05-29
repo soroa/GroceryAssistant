@@ -21,7 +21,6 @@ class RecipesRepo {
     init {
         val retrofit = Retrofit.Builder()//
                 .baseUrl(RecipesAPIService.URL)//
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//
                 .addConverterFactory(GsonConverterFactory.create())//
                 .build()
         recipeAPIService = retrofit.create<RecipesAPIService>(RecipesAPIService::class.java)
