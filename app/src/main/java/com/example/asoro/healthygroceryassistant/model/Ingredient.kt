@@ -1,11 +1,12 @@
 package com.example.asoro.healthygroceryassistant.model
 
+import com.example.asoro.healthygroceryassistant.ui.adapters.Teasable
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 
 
-class Ingredient :Serializable{
+class Ingredient :Serializable, Teasable{
     @SerializedName("uri")
     internal var uri: String? = null
 
@@ -16,7 +17,7 @@ class Ingredient :Serializable{
     internal var measure: Measure? = null
 
 
-    @SerializedName("text")
+    @SerializedName("ingredienteCheckedView")
      var text: String? = null
         internal set
 

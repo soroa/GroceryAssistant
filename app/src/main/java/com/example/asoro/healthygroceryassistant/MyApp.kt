@@ -1,23 +1,21 @@
 package com.example.asoro.healthygroceryassistant
 
 import android.app.Application
-import com.example.asoro.healthygroceryassistant.dagger.DaggerRepositoryComponent
-import com.example.asoro.healthygroceryassistant.dagger.RepositoryComponent
-import com.example.asoro.healthygroceryassistant.db.FavoritesDatabase
+import com.example.asoro.healthygroceryassistant.dagger.AppComponent
+import com.example.asoro.healthygroceryassistant.dagger.ContextModule
+import com.example.asoro.healthygroceryassistant.dagger.DaggerAppComponent
 
 
 class MyApp:Application() {
 
 
     companion object {
-        var favoritesDB: FavoritesDatabase? = null
-        lateinit var repositoryComponent: RepositoryComponent
+        lateinit var sAppComponent: AppComponent
 
     }
 
     override fun onCreate() {
         super.onCreate()
-//        MyApp.favoritesDB = Room.databaseBuilder(this, FavoritesDatabase::class.java, "favorites").build()
-        repositoryComponent = DaggerRepositoryComponent.builder().build()
+       sAppComponent = DaggerAppComponent.builder().contextModule(ContextModule(this)).build()
     }
 }

@@ -6,8 +6,7 @@ import dagger.Component
 
 @ApplicationScope
 @Component(modules = arrayOf(RecipesRepoModule::class))
-interface RepositoryComponent {
+interface AppComponent {
 
     fun inject(searchViewModel: SearchViewModel)
-
 }

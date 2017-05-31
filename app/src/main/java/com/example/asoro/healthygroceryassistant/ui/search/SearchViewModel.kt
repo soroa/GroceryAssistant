@@ -13,8 +13,12 @@ class SearchViewModel: ViewModel() {
     @Inject
     lateinit var recipeRepo: RecipesRepo
 
+
+//    @Inject
+//    lateinit var favoritesDB: FavoritesDatabase
+//
     init {
-        MyApp.repositoryComponent.inject(this)
+        MyApp.sAppComponent.inject(this)
     }
 
     var recipes: LiveData<List<Recipe>>? = null

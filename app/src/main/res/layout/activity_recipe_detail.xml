@@ -46,7 +46,6 @@
                 android:padding="@dimen/activity_horizontal_margin"
                 tools:text="Servings"
                 android:textSize="20sp" />
-
         </LinearLayout>
 
 

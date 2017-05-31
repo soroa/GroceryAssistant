@@ -14,12 +14,13 @@ import com.example.asoro.healthygroceryassistant.R
 import com.example.asoro.healthygroceryassistant.inflate
 import com.example.asoro.healthygroceryassistant.model.Recipe
 import com.example.asoro.healthygroceryassistant.ui.adapters.RecipeAdapter
+import com.example.asoro.healthygroceryassistant.ui.adapters.RecipeAdapterDelegate
 import com.example.asoro.healthygroceryassistant.ui.recipe_detail.RecipeDetailActivity
 import com.example.asoro.healthygroceryassistant.ui.search.SearchViewModel
 import kotlinx.android.synthetic.main.fragment_recipes_search_results.*
 
-class SearchResultsLifecycleFragment():LifecycleFragment(),SearchResultsView, OnRecipeTeaserClickListener, RecipeAdapter.OnAddToFavoritesListener, RecipeAdapter.OnAddToShoppingCartPressedListener {
-    var adapter: RecipeAdapter? = null
+class SearchResultsLifecycleFragment():LifecycleFragment(),SearchResultsView, RecipeAdapterDelegate.OnRecipeTeaserActionListener {
+    var recipeAdapter: RecipeAdapter? = null
 
     private var  viewModel: SearchViewModel?=null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,16 +41,15 @@ class SearchResultsLifecycleFragment():LifecycleFragment(),SearchResultsView, On
 
 
     private fun initAdapter() {
-
-        adapter = RecipeAdapter(viewModel?.recipes?.value as List<Recipe>, this, this, this)
+        recipeAdapter = RecipeAdapter(this, viewModel?.recipes?.value as List<Recipe>)
         val mLayoutManager = LinearLayoutManager(context)
         recipes_search_results_rv.setLayoutManager(mLayoutManager)
         recipes_search_results_rv.setItemAnimator(DefaultItemAnimator())
-        recipes_search_results_rv.setAdapter(adapter)
+        recipes_search_results_rv.setAdapter(recipeAdapter)
     }
 
     override fun showRecipes(newRecipes: List<Recipe>) {
-        adapter?.notifyDataSetChanged()
+        recipeAdapter?.notifyDataSetChanged()
     }
 
     override fun showRecipeDetail(recipe: Recipe) {

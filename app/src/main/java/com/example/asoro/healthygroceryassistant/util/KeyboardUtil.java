@@ -60,10 +60,10 @@ public final class KeyboardUtil {
 	}
 
 	/**
-	 * Adds an extra space to push up the view if edit text has focus
+	 * Adds an extra space to push up the view if edit ingredienteCheckedView has focus
 	 *
 	 * @param editText
-	 * 		the edit text
+	 * 		the edit ingredienteCheckedView
 	 * @param keyBoardSpace
 	 * 		the spacer view
 	 */
