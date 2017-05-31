@@ -3,21 +3,28 @@ package com.example.asoro.healthygroceryassistant.dagger
 import com.example.asoro.healthygroceryassistant.RecipesAPIService
 import dagger.Module
 import dagger.Provides
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
+
 
 @Module
-interface NetworkModule {
+class NetworkModule {
 
+    @ApplicationScope
     @Provides
-    @Singleton
-    fun provideRetrofit(): Retrofit {
-        return Retrofit.Builder()//
-                .baseUrl(RecipesAPIService.URL)//
-                .addConverterFactory(GsonConverterFactory.create())//
-                .build()
+    fun provideOkHttp(): OkHttpClient {
+        return OkHttpClient().newBuilder().build()
     }
 
+    @ApplicationScope
+    @Provides
+    fun retrofit(okHttpClient: OkHttpClient): Retrofit {
+        return Retrofit.Builder()//
+                .baseUrl(RecipesAPIService.URL)//
+                .client(okHttpClient)//
+                .addConverterFactory(GsonConverterFactory.create())//
+                .build()
 
+    }
 }

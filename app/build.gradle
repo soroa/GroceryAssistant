@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 25
@@ -33,6 +34,7 @@ ext {
     support_library_version = '25.3.1'
     dagger_version = "2.11-rc2"
     runner_version = '0.5'
+    okhttpVersion= "3.5.0"
 }
 
 dependencies {
@@ -41,7 +43,6 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    compile "com.google.dagger:dagger:${dagger_version}"
 
     compile "android.arch.lifecycle:runtime:${arch_version}"
     compile "android.arch.lifecycle:extensions:${arch_version}"
@@ -70,6 +71,7 @@ dependencies {
     compile 'com.hannesdorfmann:adapterdelegates3:3.0.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.android.support:support-v4:25.3.1'
+    compile "com.squareup.okhttp3:okhttp:$okhttpVersion"
     testCompile 'org.mockito:mockito-core:2.+'
     testCompile 'junit:junit:4.12'
 

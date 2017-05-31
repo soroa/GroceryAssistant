@@ -15,16 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 
 
-class RecipesRepo {
-    private var recipeAPIService: RecipesAPIService
-
-    init {
-        val retrofit = Retrofit.Builder()//
-                .baseUrl(RecipesAPIService.URL)//
-                .addConverterFactory(GsonConverterFactory.create())//
-                .build()
-        recipeAPIService = retrofit.create<RecipesAPIService>(RecipesAPIService::class.java)
-    }
+class RecipesRepo(  private var recipeAPIService: RecipesAPIService) {
 
 
     fun getRecipesRx(keyword: String, diet: String, healthLabel: String): Observable<List<Recipe>> {

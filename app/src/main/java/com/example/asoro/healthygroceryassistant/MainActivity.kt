@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import com.example.asoro.healthygroceryassistant.dagger.SearchComponent
 import com.example.asoro.healthygroceryassistant.ui.search.SearchLifecycleFragment
 import com.example.asoro.healthygroceryassistant.ui.search_results.SearchResultsLifecycleFragment
 
@@ -18,8 +17,6 @@ import com.example.asoro.healthygroceryassistant.ui.search_results.SearchResults
 class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, SearchLifecycleFragment.OnRecipeSearchEvent {
 
     //TODO Recipe repo from dagger
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

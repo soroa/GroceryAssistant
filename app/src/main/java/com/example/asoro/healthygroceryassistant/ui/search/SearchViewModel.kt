@@ -2,13 +2,21 @@ package com.example.asoro.healthygroceryassistant.ui.search
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
+import com.example.asoro.healthygroceryassistant.MyApp
 import com.example.asoro.healthygroceryassistant.RecipesRepo
 import com.example.asoro.healthygroceryassistant.db.FavoritesDatabase
 import com.example.asoro.healthygroceryassistant.model.Recipe
+import javax.inject.Inject
 
-class SearchViewModel() : ViewModel() {
+class SearchViewModel: ViewModel() {
 
-    private val recipeRepo: RecipesRepo = RecipesRepo()
+    @Inject
+    lateinit var recipeRepo: RecipesRepo
+
+    init {
+        MyApp.repositoryComponent.inject(this)
+    }
+
     var recipes: LiveData<List<Recipe>>? = null
     var favoritesDatabase: FavoritesDatabase? = null
 
