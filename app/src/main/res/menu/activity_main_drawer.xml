@@ -4,23 +4,23 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/search"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@mipmap/ic_search_black_24dp"
             android:title="Search" />
         <item
             android:id="@+id/favorites"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@mipmap/ic_favorite_black_24dp"
             android:title="Favorites" />
         <item
             android:id="@+id/shopping_list"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@mipmap/ic_shopping_cart_black_24dp"
             android:title="Shopping List" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Tools  ">
         <menu>
             <item
                 android:id="@+id/intermittent_fasting"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@mipmap/ic_alarm_black_24dp"
                 android:title="Intermittent Fasting" />
         </menu>
     </item>

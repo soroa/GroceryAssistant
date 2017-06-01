@@ -16,7 +16,7 @@ import com.example.asoro.healthygroceryassistant.model.Recipe
 import com.example.asoro.healthygroceryassistant.util.KeyboardUtil
 import kotlinx.android.synthetic.main.fragment_search.*
 
-class SearchLifecycleFragment : LifecycleFragment(), SearchView, View.OnClickListener, RadioGroup.OnCheckedChangeListener {
+class SearchFragment : LifecycleFragment(), SearchView, View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     private var diet: String = ""
     private var healthLabel: String = ""

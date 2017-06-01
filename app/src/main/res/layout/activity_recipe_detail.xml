@@ -24,8 +24,10 @@
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="8dp"
                 android:padding="@dimen/activity_horizontal_margin"
-                tools:text="Title"
-                android:textSize="20sp" />
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@color/colorAccent"
+                tools:text="Tasty Recipe"
+                android:textSize="@dimen/material_font_title" />
 
             <TextView
                 android:id="@+id/recipe_ingredients"
@@ -35,7 +37,7 @@
                 android:padding="@dimen/activity_horizontal_margin"
                 tools:text="Ingredients"
                 android:text="ingredients"
-                android:textSize="20sp" />
+                android:textSize="@dimen/material_font_subheading" />
 
             <TextView
                 android:id="@+id/recipe_url"
@@ -87,10 +89,11 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/favorite_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_horizontal_margin"
-        android:src="@drawable/ic_menu_share"
+        android:src="@mipmap/ic_favorite_black_24dp"
         app:layout_anchor="@id/main.appbar"
         app:layout_anchorGravity="bottom|right|end" />
 

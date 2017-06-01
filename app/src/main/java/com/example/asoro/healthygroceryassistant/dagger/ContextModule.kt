@@ -11,5 +11,4 @@ class ContextModule(private var context: Context) {
     fun context(): Context {
         return context
     }
-
 }

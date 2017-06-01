@@ -10,11 +10,12 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import com.example.asoro.healthygroceryassistant.ui.search.SearchLifecycleFragment
-import com.example.asoro.healthygroceryassistant.ui.search_results.SearchResultsLifecycleFragment
+import com.example.asoro.healthygroceryassistant.ui.favorites.FavoritesFragment
+import com.example.asoro.healthygroceryassistant.ui.search.SearchFragment
+import com.example.asoro.healthygroceryassistant.ui.search_results.SearchResultsFragment
 
 
-class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, SearchLifecycleFragment.OnRecipeSearchEvent {
+class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, SearchFragment.OnRecipeSearchEvent {
 
     //TODO Recipe repo from dagger
 
@@ -35,11 +36,7 @@ class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         val navigationView = findViewById(R.id.nav_view) as NavigationView
         navigationView.setNavigationItemSelectedListener(this)
         getSupportActionBar()?.setDisplayShowTitleEnabled(false)
-        getSupportActionBar()?.hide()
-
-
-
-        loadFragment(SearchLifecycleFragment())
+        loadFragment(SearchFragment())
     }
 
 
@@ -71,7 +68,7 @@ class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         val fragmentTransaction = supportFragmentManager.beginTransaction();
         fragmentTransaction.setCustomAnimations(
                 R.anim.abc_fade_in, R.anim.abc_fade_out, R.anim.abc_popup_enter, R.anim.abc_popup_exit);
-        fragmentTransaction.replace(R.id.frag_container_search, f);
+        fragmentTransaction.replace(R.id.frag_container, f);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
@@ -80,9 +77,9 @@ class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         if (id == R.id.search) {
-            // Handle the camera action
+            loadFragment(SearchFragment())
         } else if (id == R.id.favorites) {
-
+            loadFragment(FavoritesFragment())
         } else if (id == R.id.shopping_list) {
 
         } else if (id == R.id.intermittent_fasting) {
@@ -95,7 +92,7 @@ class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     }
 
     override fun onRecipeSearchEvent() {
-        loadFragment(SearchResultsLifecycleFragment())
+        loadFragment(SearchResultsFragment())
     }
 
 
