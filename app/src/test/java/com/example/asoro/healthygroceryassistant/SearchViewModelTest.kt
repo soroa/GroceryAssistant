@@ -1,13 +1,11 @@
 package com.example.asoro.healthygroceryassistant
 
-import com.example.asoro.healthygroceryassistant.ui.search.SearchView
 import org.junit.Test
-import org.mockito.Mockito.mock
 
 class SearchViewModelTest {
 
 
-    private val searchView = mock(SearchView::class.java)
+//    private val searchView = mock(SearchView::class.java)
 
 
     /**

@@ -41,7 +41,7 @@ class SearchResultsFragment :LifecycleFragment(),SearchResultsView, RecipeAdapte
 
 
     private fun initAdapter() {
-        recipeAdapter = RecipeAdapter(this, viewModel?.recipes?.value as List<Recipe>, true)
+        recipeAdapter = RecipeAdapter(this, viewModel?.recipes?.value as List<Recipe>, false)
         val mLayoutManager = LinearLayoutManager(context)
         recipes_search_results_rv.setLayoutManager(mLayoutManager)
         recipes_search_results_rv.setItemAnimator(DefaultItemAnimator())
@@ -74,6 +74,5 @@ class SearchResultsFragment :LifecycleFragment(),SearchResultsView, RecipeAdapte
             Log.d("Andrea", "recipes")
         })
     }
-
 
 }

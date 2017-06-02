@@ -1,7 +1,9 @@
 package com.example.asoro.healthygroceryassistant.model
 
-import android.arch.persistence.room.*
-import com.example.asoro.healthygroceryassistant.db.Converter.Converters
+import android.arch.persistence.room.ColumnInfo
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.Ignore
+import android.arch.persistence.room.PrimaryKey
 import com.example.asoro.healthygroceryassistant.ui.adapters.Teasable
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
@@ -18,10 +20,9 @@ class  Recipe: Teasable, Serializable {
     var name: String? = null
 
     @Ignore
-    @TypeConverters(Converters::class)
     @ColumnInfo(name = "ingredients")
     @SerializedName("ingredients")
-    var ingredientList: List<Ingredient>? = null
+    var ingredients: List<Ingredient>? = null
 
     @ColumnInfo(name = "image_url")
     @SerializedName("image")

@@ -25,7 +25,7 @@ class RecipeDetailActivity: AppCompatActivity() {
         teaser_preview_details.loadImg(recipe?.imageURL!!)
         recipe_title.setText(recipe?.name)
         var ingredients = ""
-        for(i in recipe?.ingredientList!!){
+        for(i in recipe?.ingredients!!){
             ingredients = ingredients + i.text + " \n"
         }
         recipe_ingredients.setText(ingredients)

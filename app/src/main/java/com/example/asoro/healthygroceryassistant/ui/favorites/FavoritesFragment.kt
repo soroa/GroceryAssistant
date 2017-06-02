@@ -43,7 +43,7 @@ class FavoritesFragment : LifecycleFragment(), RecipeAdapterDelegate.OnRecipeTea
     }
 
     private fun initAdapter(recipes: List<Recipe>) {
-        recipeAdapter = RecipeAdapter(this, recipes, false)
+        recipeAdapter = RecipeAdapter(this, recipes, true)
         val mLayoutManager = LinearLayoutManager(context)
         favorites_rv.setLayoutManager(mLayoutManager)
         favorites_rv.setItemAnimator(DefaultItemAnimator())

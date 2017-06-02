@@ -19,20 +19,11 @@ class FavoritesViewModel:ViewModel() {
         MyApp.sAppComponent.inject(this)
     }
 
-    fun addToFavorite(recipe: Recipe) {
-        Single.fromCallable {
-            favoritesDB?.favoritesDao()?.insert(recipe)
-        }.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe()
-    }
-
-
     fun removeFromFavorites(recipe: Recipe) {
         Single.fromCallable {
             favoritesDB?.favoritesDao()?.delete(recipe)
         }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe()
-
     }
 
     fun getFavorites(): LiveData<List<Recipe>> {
