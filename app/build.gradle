@@ -78,6 +78,8 @@ dependencies {
     compile 'com.hannesdorfmann:adapterdelegates3:3.0.1'
     //Picasso
     compile 'com.squareup.picasso:picasso:2.5.2'
+    //MPAndroidChart
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
     //okhttp
     compile "com.squareup.okhttp3:okhttp:$okhttpVersion"
     // RXJava
@@ -92,5 +94,6 @@ dependencies {
 repositories {
     mavenCentral()
     maven { url 'https://maven.google.com' }
+    maven { url "https://jitpack.io" }
 }
 

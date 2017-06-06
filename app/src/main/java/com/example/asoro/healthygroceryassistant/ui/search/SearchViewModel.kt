@@ -4,7 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
 import com.example.asoro.healthygroceryassistant.MyApp
 import com.example.asoro.healthygroceryassistant.RecipesRepo
-import com.example.asoro.healthygroceryassistant.db.FavoritesDatabase
+import com.example.asoro.healthygroceryassistant.db.MyDatabase
 import com.example.asoro.healthygroceryassistant.model.Ingredient
 import com.example.asoro.healthygroceryassistant.model.Recipe
 import io.reactivex.Single
@@ -18,7 +18,7 @@ class SearchViewModel : ViewModel() {
     lateinit var recipeRepo: RecipesRepo
 
     @Inject
-    lateinit var favoritesDB: FavoritesDatabase
+    lateinit var mMyDB: MyDatabase
 
 
     init {
@@ -38,24 +38,24 @@ class SearchViewModel : ViewModel() {
         }
 
         Single.fromCallable {
-            favoritesDB.favoritesDao().insert(recipe)
+            mMyDB.favoritesDao().insert(recipe)
         }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe()
         Single.fromCallable {
-            favoritesDB.IngredientDAO().insertAll(recipe.ingredients as List<Ingredient>)
+            mMyDB.IngredientDAO().insertAll(recipe.ingredients as List<Ingredient>)
         }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
 
     fun removeFromFavorites(recipe: Recipe) {
         Single.fromCallable {
-            favoritesDB.favoritesDao().delete(recipe)
+            mMyDB.favoritesDao().delete(recipe)
         }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe()
     }
 
     fun getFavorites(): LiveData<List<Recipe>> {
-        return favoritesDB.favoritesDao().getAll()
+        return mMyDB.favoritesDao().getAll()
     }
 
 

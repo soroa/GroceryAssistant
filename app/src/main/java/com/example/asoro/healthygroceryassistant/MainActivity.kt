@@ -1,5 +1,7 @@
 package com.example.asoro.healthygroceryassistant
 
+import android.arch.persistence.room.Room
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
@@ -10,9 +12,13 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import com.example.asoro.healthygroceryassistant.db_java.AppDatabase
 import com.example.asoro.healthygroceryassistant.ui.favorites.FavoritesFragment
+import com.example.asoro.healthygroceryassistant.ui.intermittent_fasting.IntermittentFastingActivity
 import com.example.asoro.healthygroceryassistant.ui.search.SearchFragment
 import com.example.asoro.healthygroceryassistant.ui.search_results.SearchResultsFragment
+
+
 
 
 class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, SearchFragment.OnRecipeSearchEvent {
@@ -37,6 +43,8 @@ class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         navigationView.setNavigationItemSelectedListener(this)
         getSupportActionBar()?.setDisplayShowTitleEnabled(false)
         loadFragment(SearchFragment())
+        val db = Room.databaseBuilder(applicationContext,
+                AppDatabase::class.java, "database-name").build()
     }
 
 
@@ -83,7 +91,8 @@ class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         } else if (id == R.id.shopping_list) {
 
         } else if (id == R.id.intermittent_fasting) {
-
+            var intent:Intent = Intent(this, IntermittentFastingActivity::class.java)
+            startActivity(intent)
         }
 
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout

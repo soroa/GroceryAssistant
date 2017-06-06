@@ -35,6 +35,8 @@
             android:layout_marginLeft="@dimen/material_16dp"
             android:layout_marginRight="@dimen/material_16dp"
             android:clickable="true"
+            android:maxLines="2"
+            android:ellipsize="end"
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/material_font_subheading"
             tools:text="Delicous Recipe" />

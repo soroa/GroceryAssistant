@@ -3,7 +3,6 @@ package com.example.asoro.healthygroceryassistant.ui.favorites
 import android.arch.lifecycle.LifecycleFragment
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
@@ -16,7 +15,6 @@ import com.example.asoro.healthygroceryassistant.inflate
 import com.example.asoro.healthygroceryassistant.model.Recipe
 import com.example.asoro.healthygroceryassistant.ui.adapters.RecipeAdapter
 import com.example.asoro.healthygroceryassistant.ui.adapters.RecipeAdapterDelegate
-import com.example.asoro.healthygroceryassistant.ui.recipe_detail.RecipeDetailActivity
 import kotlinx.android.synthetic.main.fragment_favorites.*
 
 class FavoritesFragment : LifecycleFragment(), RecipeAdapterDelegate.OnRecipeTeaserActionListener {
@@ -65,9 +63,9 @@ class FavoritesFragment : LifecycleFragment(), RecipeAdapterDelegate.OnRecipeTea
     }
 
     override fun showRecipeDetail(recipe: Recipe) {
-        var intent: Intent = Intent(context, RecipeDetailActivity::class.java)
-        intent.putExtra("recipe", recipe)
-        startActivity(intent)
+//        var intent: Intent = Intent(context, RecipeDetailActivity::class.java)
+//        intent.putExtra("recipe", recipe)
+//        startActivity(intent)
     }
 }
 

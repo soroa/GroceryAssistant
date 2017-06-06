@@ -4,8 +4,6 @@ import android.content.res.Resources
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.ScaleAnimation
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -60,49 +58,48 @@ class RecipeAdapterDelegate(private val onRecipeTeaserClickListener: OnRecipeTea
                 isFavorite = true
                 toggleFavoriteBtnColor()
             }
-
         }
 
         override fun onClick(v: View?) {
             when (v) {
                 favoriteBtn -> {
-//                    toggleFavorite(recipe as Recipe)
-                    val growAnim: ScaleAnimation =  ScaleAnimation(1f, 1f, 0f, 1f)
-                    val shrinkAnim: ScaleAnimation =  ScaleAnimation(1f, 1f, 1f, 0f)
+                    toggleFavorite(recipe as Recipe)
 
-
-                    growAnim.setDuration(2000);
-                    shrinkAnim.setDuration(2000);
-
-                    teaserImage.setAnimation(growAnim);
-                    growAnim.start();
-
-                    growAnim.setAnimationListener(object: Animation.AnimationListener{
-                        override fun onAnimationRepeat(animation: Animation?) {
-                        }
-
-                        override fun onAnimationEnd(animation: Animation?) {
-                            teaserImage.setAnimation(shrinkAnim);
-                            shrinkAnim.start();
-                        }
-
-                        override fun onAnimationStart(animation: Animation?) {
-                                                    }
-
-                    })
-                    shrinkAnim.setAnimationListener(object: Animation.AnimationListener{
-                        override fun onAnimationRepeat(animation: Animation?) {
-                        }
-
-                        override fun onAnimationEnd(animation: Animation?) {
-                            teaserImage.setAnimation(growAnim);
-                            growAnim.start();
-                        }
-
-                        override fun onAnimationStart(animation: Animation?) {
-                        }
-
-                    })
+//                    val growAnim: ScaleAnimation = ScaleAnimation(1f, 1f, 0f, 1f)
+//                    val shrinkAnim: ScaleAnimation = ScaleAnimation(1f, 1f, 1f, 0f)
+//
+//
+//                    growAnim.setDuration(2000);
+//                    shrinkAnim.setDuration(2000);
+//
+//                    teaserImage.setAnimation(growAnim);
+//                    growAnim.start();
+//
+//                    growAnim.setAnimationListener(object : Animation.AnimationListener {
+//                        override fun onAnimationRepeat(animation: Animation?) {
+//                        }
+//
+//                        override fun onAnimationEnd(animation: Animation?) {
+//                            teaserImage.setAnimation(shrinkAnim);
+//                            shrinkAnim.start();
+//                        }
+//
+//                        override fun onAnimationStart(animation: Animation?) {
+//                        }
+//                    })
+//                    shrinkAnim.setAnimationListener(object : Animation.AnimationListener {
+//                        override fun onAnimationRepeat(animation: Animation?) {
+//                        }
+//
+//                        override fun onAnimationEnd(animation: Animation?) {
+//                            teaserImage.setAnimation(growAnim);
+//                            growAnim.start();
+//                        }
+//
+//                        override fun onAnimationStart(animation: Animation?) {
+//                        }
+//1
+//                    })
                     return
                 }
                 cartBtn -> {

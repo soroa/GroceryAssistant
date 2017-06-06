@@ -1,6 +1,7 @@
 package com.example.asoro.healthygroceryassistant.dagger
 
 import com.example.asoro.healthygroceryassistant.ui.favorites.FavoritesViewModel
+import com.example.asoro.healthygroceryassistant.ui.intermittent_fasting.IntermittentFastingViewModel
 import com.example.asoro.healthygroceryassistant.ui.recipe_detail.RecipeDetailViewModel
 import com.example.asoro.healthygroceryassistant.ui.search.SearchViewModel
 import dagger.Component
@@ -14,4 +15,6 @@ interface AppComponent {
     fun inject(favoritesViewModel: FavoritesViewModel)
 
     fun inject(recipeDetailViewModel: RecipeDetailViewModel)
+
+    fun inject(intermittentFastingViewModel: IntermittentFastingViewModel)
 }
