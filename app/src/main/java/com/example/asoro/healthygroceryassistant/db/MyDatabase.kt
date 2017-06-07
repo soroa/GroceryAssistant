@@ -7,7 +7,7 @@ import com.example.asoro.healthygroceryassistant.model.Ingredient
 import com.example.asoro.healthygroceryassistant.model.Recipe
 
 
-@Database(entities = arrayOf(Recipe::class, Ingredient::class, FastPeriod::class), version = 3)
+@Database(entities = arrayOf(Recipe::class, Ingredient::class, FastPeriod::class), version = 6)
 @TypeConverters(DateConverter::class)
 abstract class MyDatabase : RoomDatabase() {
     abstract fun favoritesDao(): RecipeDAO

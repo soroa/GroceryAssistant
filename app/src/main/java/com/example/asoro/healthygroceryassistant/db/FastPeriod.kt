@@ -3,6 +3,8 @@ package com.example.asoro.healthygroceryassistant.db
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import java.util.*
+import java.util.concurrent.TimeUnit
+
 
 @Entity
 data class FastPeriod( val startDate:Date, val endDate:Date){
@@ -17,4 +19,9 @@ data class FastPeriod( val startDate:Date, val endDate:Date){
         //TODO  return day
         return startDate.toString()
     }
+
+    fun getDurationS():Long{
+        return TimeUnit.MILLISECONDS.toSeconds(endDate.time - startDate.time)
+    }
+
 }

@@ -21,16 +21,7 @@ class IntermittentFastingActivity : AppCompatActivity(), IntermittentFastingView
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intermittent_fasting)
         viewModel = ViewModelProviders.of(this).get(IntermittentFastingViewModel::class.java)
-        var barChart = findViewById(R.id.chart) as BarChart
-
-        val dataSet: BarDataSet = BarDataSet(createFastData(), "fast")
-        dataSet.setColor(getResources().getColor(R.color.darkRed))
-
-        val barData = BarData(dataSet)
-        barChart.getXAxis().setValueFormatter(IndexAxisValueFormatter(createLabelsData()));
-        barChart.setFitBars(true)
-        barChart.data = barData
-        barChart.invalidate()
+        setUpChart()
         start_stop_fast.setOnClickListener({ v ->
 
             if (!isFasting) {
@@ -56,6 +47,28 @@ class IntermittentFastingActivity : AppCompatActivity(), IntermittentFastingView
         timer_tv.setText("Done")
     }
 
+    fun setUpChart(){
+        var barChart = findViewById(R.id.chart) as BarChart
+
+        val dataSet: BarDataSet = BarDataSet(createFastData(), "fast")
+        dataSet.setColors(getResources().getColor(R.color.darkRed), getResources().getColor(R.color.darkGreen))
+        val barData = BarData(dataSet)
+        barChart.getXAxis().setValueFormatter(IndexAxisValueFormatter(createLabelsData()));
+        barChart.setFitBars(true)
+        barChart.xAxis.setDrawGridLines(false)
+        barChart.axisRight.setDrawAxisLine(false)
+        barChart.axisRight.setDrawGridLines(false)
+        barChart.axisRight.setDrawLabels(false)
+        barChart.xAxis.setDrawAxisLine(false)
+        barChart.axisLeft.setDrawAxisLine(false)
+        barChart.axisLeft.setDrawGridLines(false)
+        barChart.data = barData
+        barChart.animateXY(2000,2000)
+        barChart.axisLeft.axisMinimum=0f
+        barChart.axisLeft.axisMaximum=24f
+        barChart.invalidate()
+    }
+
     fun createFastData(): List<BarEntry> {
         var list = ArrayList<BarEntry>()
         list.add(BarEntry(0F, 6.5F))
@@ -68,11 +81,11 @@ class IntermittentFastingActivity : AppCompatActivity(), IntermittentFastingView
 
     fun createLabelsData(): List<String> {
         var list = ArrayList<String>()
-        list.add("Monday")
-        list.add("Tuesday")
-        list.add("Wednesday")
-        list.add("Thursday")
-        list.add("Friday")
+        list.add("Mon")
+        list.add("Tue")
+        list.add("Wed")
+        list.add("Th")
+        list.add("Fri")
 
         return list
     }

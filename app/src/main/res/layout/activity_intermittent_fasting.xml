@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/background_light"
     android:fitsSystemWindows="true">
 
@@ -22,10 +22,10 @@
                 android:id="@+id/start_stop_fast"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/material_16dp"
                 android:layout_marginStart="@dimen/material_16dp"
                 android:layout_marginTop="@dimen/material_16dp"
                 android:background="@color/colorAccent"
-                android:layout_marginEnd="@dimen/material_16dp"
                 android:text="@string/start_fasting" />
 
             <TextView
@@ -34,15 +34,15 @@
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="8dp"
                 android:padding="@dimen/activity_horizontal_margin"
-                tools:text="Last Seven Day"
                 android:text="@string/last_seven_day"
-                android:textSize="@dimen/material_font_subheading" />
+                android:textSize="@dimen/material_font_subheading"
+                tools:text="Last Seven Day" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/material_16dp"
                 android:layout_marginEnd="@dimen/material_16dp"
+                android:layout_marginStart="@dimen/material_16dp"
                 android:orientation="vertical">
 
                 <com.github.mikephil.charting.charts.BarChart
@@ -50,6 +50,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="150dp" />
             </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/fast_entries_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
 
         </LinearLayout>
 
@@ -95,30 +100,39 @@
                 android:layout_marginTop="@dimen/material_16dp"
                 android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/timer_label_tv"
-                android:layout_width="match_parent"
-                android:textAlignment="center"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
-                android:textSize="@dimen/material_font_title"
-                android:text="@string/time_to_go"/>
-            <TextView
-                android:id="@+id/timer_tv"
-                android:layout_width="match_parent"
-                android:textAlignment="center"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/material_font_title"
-                android:text="16:00:00"/>
+                <TextView
+                    android:id="@+id/timer_label_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/time_to_go"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/material_font_title" />
+
+                <TextView
+                    android:id="@+id/timer_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="16:00:00"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/material_font_title" />
 
                 <TextView
                     android:id="@+id/fast_finish"
                     android:layout_width="match_parent"
-                   android:layout_marginTop="@dimen/material_16dp"
-                    android:textAlignment="center"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/material_font_subheading"
-                    android:text="Your fast will finish at"/>
+                    android:layout_marginTop="@dimen/material_16dp"
+                    android:text="Your fast started at:"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/material_font_subheading" />
+                <TextView
+                    android:id="@+id/star_time_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="16:00:00"
+                    android:clickable="true"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/material_font_title" />
             </LinearLayout>
 
         </android.support.design.widget.CollapsingToolbarLayout>

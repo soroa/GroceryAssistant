@@ -54,7 +54,6 @@ class SearchResultsFragment :LifecycleFragment(),SearchResultsView, RecipeAdapte
     }
 
     override fun showRecipeDetail(recipe: Recipe) {
-
         var intent:Intent = Intent(context, RecipeDetailActivity::class.java)
         intent.putExtra("recipe", recipe)
         startActivity(intent)

@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModel
 import com.example.asoro.healthygroceryassistant.MyApp
 import com.example.asoro.healthygroceryassistant.RecipesRepo
 import com.example.asoro.healthygroceryassistant.db.MyDatabase
-import com.example.asoro.healthygroceryassistant.model.Ingredient
 import com.example.asoro.healthygroceryassistant.model.Recipe
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -42,7 +41,7 @@ class SearchViewModel : ViewModel() {
         }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe()
         Single.fromCallable {
-            mMyDB.IngredientDAO().insertAll(recipe.ingredients as List<Ingredient>)
+            mMyDB.IngredientDAO().insertAll(recipe.ingredients)
         }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
@@ -57,6 +56,5 @@ class SearchViewModel : ViewModel() {
     fun getFavorites(): LiveData<List<Recipe>> {
         return mMyDB.favoritesDao().getAll()
     }
-
 
 }

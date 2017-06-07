@@ -49,8 +49,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
-
+    compile 'com.facebook.stetho:stetho:1.5.0'
     compile "android.arch.lifecycle:runtime:${arch_version}"
     compile "android.arch.lifecycle:extensions:${arch_version}"
     compile "android.arch.persistence.room:runtime:${arch_version}"
