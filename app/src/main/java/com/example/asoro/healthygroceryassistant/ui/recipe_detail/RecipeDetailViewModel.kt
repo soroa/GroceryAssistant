@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
 import com.example.asoro.healthygroceryassistant.MyApp
 import com.example.asoro.healthygroceryassistant.db.MyDatabase
+import com.example.asoro.healthygroceryassistant.db.RecipeWithIngredients
 import com.example.asoro.healthygroceryassistant.model.Recipe
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -35,8 +36,8 @@ class RecipeDetailViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread()).subscribe()
     }
 
-    fun getFavorites(): LiveData<List<Recipe>> {
-        return mMyDB?.favoritesDao().getAll()
+    fun getFavorites(): LiveData<List<RecipeWithIngredients>> {
+        return mMyDB.favoritesDao().getAll()
     }
 
 

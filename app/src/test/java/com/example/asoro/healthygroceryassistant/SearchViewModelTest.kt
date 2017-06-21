@@ -8,6 +8,8 @@ class SearchViewModelTest {
 //    private val searchView = mock(SearchView::class.java)
 
 
+
+
     /**
      * Test error handling.
 

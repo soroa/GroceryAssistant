@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.asoro.healthygroceryassistant.R
+import com.example.asoro.healthygroceryassistant.db.RecipeWithIngredients
 import com.example.asoro.healthygroceryassistant.inflate
 import com.example.asoro.healthygroceryassistant.model.Recipe
 import com.example.asoro.healthygroceryassistant.ui.adapters.RecipeAdapter
@@ -35,8 +36,13 @@ class FavoritesFragment : LifecycleFragment(), RecipeAdapterDelegate.OnRecipeTea
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(activity).get(FavoritesViewModel::class.java)
-        viewModel?.getFavorites()?.observe(this, Observer { recipes ->
-            if (recipes != null) {
+        viewModel?.getFavorites()?.observe(this, Observer { recipesWithIngredients ->
+            if (recipesWithIngredients != null) {
+                var recipes = ArrayList<Recipe>();
+                for(recipeWithIngs:RecipeWithIngredients in recipesWithIngredients){
+                    recipeWithIngs.recipe.ingredients =recipeWithIngs.ingredients
+                    recipes.add(recipeWithIngs.recipe)
+                }
                 initAdapter(recipes)
             }
         })
@@ -65,30 +71,9 @@ class FavoritesFragment : LifecycleFragment(), RecipeAdapterDelegate.OnRecipeTea
     }
 
     override fun showRecipeDetail(recipe: Recipe) {
-
-
-
-        viewModel?.getAllIngredients()?.observe(this, Observer{
-            ingredients ->
-            if(ingredients!=null){
-                recipe.ingredients= ingredients
-                var intent: Intent = Intent(context, RecipeDetailActivity::class.java)
-                intent.putExtra("recipe", recipe)
-                startActivity(intent)
-
-            }
-        })
-
-//        viewModel?.getIngredientsByUri(recipe?.uri as String)?.observe(this, Observer{
-//            ingredients ->
-//            if(ingredients!=null){
-//                recipe.ingredients= ingredients
-//                var intent: Intent = Intent(context, RecipeDetailActivity::class.java)
-//                intent.putExtra("recipe", recipe)
-//                startActivity(intent)
-//
-//            }
-//        })
+        var intent: Intent = Intent(context, RecipeDetailActivity::class.java)
+        intent.putExtra("recipe", recipe)
+        startActivity(intent)
     }
 }
 

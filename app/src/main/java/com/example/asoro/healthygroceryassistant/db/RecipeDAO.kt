@@ -8,13 +8,10 @@ import com.example.asoro.healthygroceryassistant.model.Recipe
 interface RecipeDAO {
 
     @Query("SELECT * FROM recipe")
-    fun getAll(): LiveData<List<Recipe>>
+    fun getAll(): LiveData<List<RecipeWithIngredients>>
 
-//    @Query("SELECT * FROM recipe WHERE uri IN (:recipeUris)")
-//    fun loadAllByIds(recipeUris: List<String>): LiveData<List<Recipe>>
-//
-//    @Query("SELECT * FROM recipe WHERE uri LIKE :uri LIMIT 1")
-//    fun findByUrui(uri: String): LiveData<Recipe>
+    @Query("SELECT * FROM recipe, ingredient WHERE recipeUri LIKE :p0 LIMIT 1")
+    fun findByUrui(recipeUri: String): LiveData<RecipeWithIngredients>
 
     @Insert
     fun insertAll( recipes: List<Recipe>)

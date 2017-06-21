@@ -1,6 +1,5 @@
 package com.example.asoro.healthygroceryassistant
 
-import android.arch.persistence.room.Room
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -12,26 +11,18 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import com.example.asoro.healthygroceryassistant.db_java.AppDatabase
 import com.example.asoro.healthygroceryassistant.ui.favorites.FavoritesFragment
 import com.example.asoro.healthygroceryassistant.ui.intermittent_fasting.IntermittentFastingActivity
 import com.example.asoro.healthygroceryassistant.ui.search.SearchFragment
 import com.example.asoro.healthygroceryassistant.ui.search_results.SearchResultsFragment
 
-
-
-
 class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, SearchFragment.OnRecipeSearchEvent {
-
-    //TODO Recipe repo from dagger
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
-
 
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
         val toggle = ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open,
@@ -43,10 +34,7 @@ class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         navigationView.setNavigationItemSelectedListener(this)
         getSupportActionBar()?.setDisplayShowTitleEnabled(false)
         loadFragment(SearchFragment())
-        val db = Room.databaseBuilder(applicationContext,
-                AppDatabase::class.java, "database-name").build()
     }
-
 
     override fun onBackPressed() {
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
@@ -72,15 +60,14 @@ class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     }
 
 
-    fun loadFragment(f: Fragment){
-        val fragmentTransaction = supportFragmentManager.beginTransaction();
+    private fun loadFragment(f: Fragment) {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.setCustomAnimations(
-                R.anim.abc_fade_in, R.anim.abc_fade_out, R.anim.abc_popup_enter, R.anim.abc_popup_exit);
-        fragmentTransaction.replace(R.id.frag_container, f);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+                R.anim.abc_fade_in, R.anim.abc_fade_out, R.anim.abc_popup_enter, R.anim.abc_popup_exit)
+        fragmentTransaction.replace(R.id.frag_container, f)
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
     }
-
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
@@ -91,7 +78,7 @@ class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         } else if (id == R.id.shopping_list) {
 
         } else if (id == R.id.intermittent_fasting) {
-            var intent:Intent = Intent(this, IntermittentFastingActivity::class.java)
+            val intent: Intent = Intent(this, IntermittentFastingActivity::class.java)
             startActivity(intent)
         }
 
@@ -103,6 +90,4 @@ class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     override fun onRecipeSearchEvent() {
         loadFragment(SearchResultsFragment())
     }
-
-
 }

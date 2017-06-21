@@ -8,6 +8,6 @@ interface SearchView{
 
     fun showError(msg:String)
 
-    fun showResults(recipes:List<Recipe>)
+    fun showResults()
 
 }

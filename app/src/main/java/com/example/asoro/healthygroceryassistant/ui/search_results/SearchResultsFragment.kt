@@ -22,8 +22,8 @@ import com.example.asoro.healthygroceryassistant.ui.search.SearchViewModel
 import kotlinx.android.synthetic.main.fragment_recipes_search_results.*
 
 class SearchResultsFragment :LifecycleFragment(),SearchResultsView, RecipeAdapterDelegate.OnRecipeTeaserActionListener {
-    var recipeAdapter: RecipeAdapter? = null
 
+    var recipeAdapter: RecipeAdapter? = null
     private var  viewModel: SearchViewModel?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,22 +39,12 @@ class SearchResultsFragment :LifecycleFragment(),SearchResultsView, RecipeAdapte
         initAdapter()
     }
 
-
-    private fun initAdapter() {
-        recipeAdapter = RecipeAdapter(this, viewModel?.recipes?.value as List<Recipe>, false)
-        val mLayoutManager = LinearLayoutManager(context)
-        recipes_search_results_rv.setLayoutManager(mLayoutManager)
-        recipes_search_results_rv.setItemAnimator(DefaultItemAnimator())
-        recipes_search_results_rv.setAdapter(recipeAdapter)
-    }
-
-
-    override fun showRecipes(newRecipes: List<Recipe>) {
+    override fun showRecipes(recipes: List<Recipe>) {
         recipeAdapter?.notifyDataSetChanged()
     }
 
     override fun showRecipeDetail(recipe: Recipe) {
-        var intent:Intent = Intent(context, RecipeDetailActivity::class.java)
+        val intent:Intent = Intent(context, RecipeDetailActivity::class.java)
         intent.putExtra("recipe", recipe)
         startActivity(intent)
     }
@@ -65,13 +55,20 @@ class SearchResultsFragment :LifecycleFragment(),SearchResultsView, RecipeAdapte
 
     override fun onAddToFavorites(recipe:Recipe) {
         viewModel?.addToFavorite(recipe)
-
     }
 
     override fun onAddToShoppingCart(recipe:Recipe) {
         viewModel?.getFavorites()?.observe(this, Observer{recipes->
             Log.d("Andrea", "recipes")
         })
+    }
+
+    private fun initAdapter() {
+        recipeAdapter = RecipeAdapter(this, viewModel?.recipes?.value as List<Recipe>, false)
+        val mLayoutManager = LinearLayoutManager(context)
+        recipes_search_results_rv.layoutManager = mLayoutManager
+        recipes_search_results_rv.itemAnimator = DefaultItemAnimator()
+        recipes_search_results_rv.adapter = recipeAdapter
     }
 
 }

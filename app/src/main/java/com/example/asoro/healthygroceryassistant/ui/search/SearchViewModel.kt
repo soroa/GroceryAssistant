@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModel
 import com.example.asoro.healthygroceryassistant.MyApp
 import com.example.asoro.healthygroceryassistant.RecipesRepo
 import com.example.asoro.healthygroceryassistant.db.MyDatabase
+import com.example.asoro.healthygroceryassistant.db.RecipeWithIngredients
 import com.example.asoro.healthygroceryassistant.model.Recipe
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -18,7 +19,6 @@ class SearchViewModel : ViewModel() {
 
     @Inject
     lateinit var mMyDB: MyDatabase
-
 
     init {
         MyApp.sAppComponent.inject(this)
@@ -38,12 +38,9 @@ class SearchViewModel : ViewModel() {
 
         Single.fromCallable {
             mMyDB.favoritesDao().insert(recipe)
-        }.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe()
-        Single.fromCallable {
             mMyDB.IngredientDAO().insertAll(recipe.ingredients)
         }.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe()
     }
 
     fun removeFromFavorites(recipe: Recipe) {
@@ -53,7 +50,7 @@ class SearchViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread()).subscribe()
     }
 
-    fun getFavorites(): LiveData<List<Recipe>> {
+    fun getFavorites(): LiveData<List<RecipeWithIngredients>> {
         return mMyDB.favoritesDao().getAll()
     }
 

@@ -12,7 +12,6 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import com.example.asoro.healthygroceryassistant.R
 import com.example.asoro.healthygroceryassistant.inflate
-import com.example.asoro.healthygroceryassistant.model.Recipe
 import com.example.asoro.healthygroceryassistant.util.KeyboardUtil
 import kotlinx.android.synthetic.main.fragment_search.*
 
@@ -60,8 +59,7 @@ class SearchFragment : LifecycleFragment(), SearchView, View.OnClickListener, Ra
                             if (recipes.isEmpty()) {
                                 showError("No results found that match your search");
                             } else {
-                                (false)
-                                showResults2()
+                                showResults()
                             }
                         } else {
                             showError("Network error");
@@ -125,11 +123,7 @@ class SearchFragment : LifecycleFragment(), SearchView, View.OnClickListener, Ra
         }
     }
 
-    override fun showResults(recipes: List<Recipe>) {
-        (activity as OnRecipeSearchEvent).onRecipeSearchEvent()
-    }
-
-    fun showResults2() {
+    override fun showResults() {
         (activity as OnRecipeSearchEvent).onRecipeSearchEvent()
     }
 

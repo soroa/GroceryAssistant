@@ -16,6 +16,4 @@ abstract class MyDatabase : RoomDatabase() {
 
     abstract fun IntermittentFastingDAO(): IntermittentFastingDAO
 
-//    abstract fun recipeAndIngredientsDAO():RecipeAndIngredientsDAO
-
 }
