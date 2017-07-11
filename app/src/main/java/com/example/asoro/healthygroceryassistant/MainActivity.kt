@@ -76,7 +76,6 @@ class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         } else if (id == R.id.favorites) {
             loadFragment(FavoritesFragment())
         } else if (id == R.id.shopping_list) {
-
         } else if (id == R.id.intermittent_fasting) {
             val intent: Intent = Intent(this, IntermittentFastingActivity::class.java)
             startActivity(intent)
