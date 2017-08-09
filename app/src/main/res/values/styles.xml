@@ -15,5 +15,17 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
+    
+    <style name="SubheadingFont">
+        <item name="android:textSize">@dimen/material_font_subheading</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="BodyFont" parent="@style/TextAppearance.AppCompat.Notification.Title">
+        <item name="android:textSize">@dimen/material_font_body</item>
+    </style>
+    <style name="RecipeDetailFont" parent="@style/TextAppearance.AppCompat.Notification.Title">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/material_font_title</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

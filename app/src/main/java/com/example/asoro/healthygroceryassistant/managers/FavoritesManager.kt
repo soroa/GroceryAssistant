@@ -1,7 +1,6 @@
-package com.example.asoro.healthygroceryassistant.ui.recipe_detail
+package com.example.asoro.healthygroceryassistant.managers
 
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.ViewModel
 import com.example.asoro.healthygroceryassistant.MyApp
 import com.example.asoro.healthygroceryassistant.db.MyDatabase
 import com.example.asoro.healthygroceryassistant.db.RecipeWithIngredients
@@ -11,34 +10,49 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class RecipeDetailViewModel : ViewModel() {
-
+/**
+ * Manager to handle favorites
+ */
+class FavoritesManager {
 
     @Inject
-    lateinit var mMyDB: MyDatabase
+    lateinit var db: MyDatabase
 
     init {
         MyApp.sAppComponent.inject(this)
     }
 
+    /**
+     * Add a recipe to the favorites
+     */
     fun addToFavorite(recipe: Recipe) {
+        recipe.ingredients?.forEach {
+            it.recipeUri = recipe.uri
+        }
+        recipe.isFavorite = true
         Single.fromCallable {
-            mMyDB.recipesDao().insert(recipe)
-        }.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe()
+            db.recipesDao().insert(recipe)
+            db.ingredientDAO().insertAll(recipe.ingredients)
+        }//
+                .subscribeOn(Schedulers.io())//
+                .observeOn(AndroidSchedulers.mainThread())//
+                .subscribe()
     }
-
 
     fun removeFromFavorites(recipe: Recipe) {
         Single.fromCallable {
-            mMyDB.recipesDao().delete(recipe)
+            recipe.isFavorite = false
+            if (recipe.isOnShoppingList) {
+                db.recipesDao().updateRecipe(recipe)
+            } else {
+                db.recipesDao().delete(recipe)
+            }
         }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe()
     }
 
     fun getFavorites(): LiveData<List<RecipeWithIngredients>> {
-        return mMyDB.recipesDao().getAll()
+        return db.recipesDao().getAll()
     }
-
 
 }

@@ -1,6 +1,6 @@
 package com.example.asoro.healthygroceryassistant.dagger
 
-import com.example.asoro.healthygroceryassistant.RecipesAPIService
+import com.example.asoro.healthygroceryassistant.remote.RecipesAPIService
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient

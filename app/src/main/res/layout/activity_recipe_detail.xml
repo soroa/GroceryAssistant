@@ -2,9 +2,9 @@
 
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/background_light"
     android:fitsSystemWindows="true">
 
@@ -20,34 +20,49 @@
 
             <TextView
                 android:id="@+id/recipe_title"
+                style="@style/RecipeDetailFont"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
                 android:lineSpacingExtra="8dp"
                 android:padding="@dimen/activity_horizontal_margin"
-                android:background="@color/colorPrimaryDark"
-                android:textColor="@color/colorAccent"
-                tools:text="Tasty Recipe"
-                android:textSize="@dimen/material_font_title" />
+                tools:text="Tasty Recipe" />
+
+            <TextView
+                style="@style/SubheadingFont"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/activity_horizontal_margin"
+                android:text="@string/ingredients" />
 
             <TextView
                 android:id="@+id/recipe_ingredients"
+                style="@style/BodyFont"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="8dp"
+                android:paddingStart="@dimen/activity_horizontal_margin"
+                android:paddingEnd="@dimen/activity_horizontal_margin"
+                android:text="@string/nothing_to_display" />
+
+            <TextView
+                style="@style/SubheadingFont"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:padding="@dimen/activity_horizontal_margin"
-                tools:text="Ingredients"
-                android:text="ingredients"
-                android:textSize="@dimen/material_font_subheading" />
+                android:text="@string/instructions" />
 
             <TextView
                 android:id="@+id/recipe_url"
+                style="@style/BodyFont"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:lineSpacingExtra="8dp"
                 android:autoLink="web"
+                android:lineSpacingExtra="8dp"
+                android:paddingStart="@dimen/activity_horizontal_margin"
+                android:paddingEnd="@dimen/activity_horizontal_margin"
                 android:padding="@dimen/activity_horizontal_margin"
-                tools:text="Servings"
-                android:textSize="20sp" />
+                tools:text="Servings" />
         </LinearLayout>
 
 

@@ -10,8 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
+        android:contentDescription="@string/recipe_image"
         android:scaleType="fitXY"
-        android:clickable="true" />
+        android:clickable="true"
+        android:focusable="false"
+        />
 
     <ImageView
         android:layout_width="match_parent"
@@ -25,7 +28,8 @@
         android:layout_alignLeft="@id/recipe_teaser_preview"
         android:layout_alignRight="@id/recipe_teaser_preview"
         android:layout_marginBottom="@dimen/material_16dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_alignStart="@id/recipe_teaser_preview">
 
         <TextView
             android:id="@+id/recipe_title"
@@ -35,6 +39,7 @@
             android:layout_marginLeft="@dimen/material_16dp"
             android:layout_marginRight="@dimen/material_16dp"
             android:clickable="true"
+            android:focusable="false"
             android:maxLines="2"
             android:ellipsize="end"
             android:textColor="@color/colorAccent"
@@ -47,20 +52,22 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/material_16dp"
             android:layout_marginEnd="@dimen/material_24dp"
+            android:contentDescription="@string/favorites_button"
             android:background="@android:color/transparent"
             android:focusableInTouchMode="false"
             android:tint="#E0E0E0"
-            card_view:srcCompat="@mipmap/ic_favorite_border_black_24dp" />
+            android:src="@mipmap/ic_favorite_border_black_24dp" />
 
         <ImageButton
             android:id="@+id/recipe_teaser_cart_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
+            android:contentDescription="@string/shopping_list_button"
             android:focusableInTouchMode="false"
             android:layout_marginEnd="@dimen/material_24dp"
             android:tint="#E0E0E0"
-            card_view:srcCompat="@mipmap/ic_shopping_cart_black_24dp"
+            card_view:srcCompat="@drawable/ic_shopping_cart"
             android:layout_marginRight="@dimen/material_24dp" />
 
     </LinearLayout>

@@ -8,17 +8,19 @@ import java.io.Serializable
 
 
 @Entity
-class Ingredient :Serializable, Teasable{
+class Ingredient : Serializable, Teasable {
     @PrimaryKey
     @SerializedName("uri")
     var uri: String? = null
 
     @SerializedName("text")
-     var text: String? = null
+    var text: String? = null
         set
 
     @SerializedName("weight")
     var weight: Float = 0.toFloat()
 
     var recipeUri: String? = null
+
+    var isOnShoppingList: Boolean = false
 }

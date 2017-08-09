@@ -10,6 +10,6 @@ import dagger.Provides
 class DatabaseModule {
     @Provides
     fun database(context: Context): MyDatabase {
-        return Room.databaseBuilder(context, MyDatabase::class.java, "favorites").build()
+        return Room.databaseBuilder(context, MyDatabase::class.java, "database").build()
     }
 }

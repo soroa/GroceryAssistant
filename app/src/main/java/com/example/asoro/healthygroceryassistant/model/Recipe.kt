@@ -42,4 +42,10 @@ class  Recipe: Teasable, Serializable {
     @SerializedName("healthLabels")
     var healthLabels: List<String>? = null
 
+    @ColumnInfo(name = "isInShoppingList")
+    var isOnShoppingList: Boolean = false
+
+    @ColumnInfo(name = "isFavorite")
+    var isFavorite: Boolean = false
+
 }

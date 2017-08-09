@@ -13,7 +13,6 @@ import kotlinx.android.synthetic.main.activity_intermittent_fasting.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-
 class IntermittentFastingActivity : AppCompatActivity(), IntermittentFastingViewModel.OnIntermittentFastingTimerEventListener {
     private var viewModel: IntermittentFastingViewModel? = null
     private var isFasting: Boolean = false

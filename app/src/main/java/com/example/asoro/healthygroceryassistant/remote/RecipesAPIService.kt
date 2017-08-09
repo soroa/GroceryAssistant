@@ -1,4 +1,4 @@
-package com.example.asoro.healthygroceryassistant
+package com.example.asoro.healthygroceryassistant.remote
 
 import com.example.asoro.healthygroceryassistant.model.Hits
 import retrofit2.Call

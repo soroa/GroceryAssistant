@@ -1,4 +1,4 @@
-package com.example.asoro.healthygroceryassistant
+package com.example.asoro.healthygroceryassistant.remote
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
@@ -38,7 +38,7 @@ class RecipesRepo(  private var recipeAPIService: RecipesAPIService) {
                 if (response?.isSuccessful!!) {
                     val res = response.body()
                     val recipes = ArrayList<Recipe>()
-                    for (h in res.hits) {
+                    for (h in res?.hits!!) {
                         recipes.add(h.recipe)
                     }
                     result.value = recipes

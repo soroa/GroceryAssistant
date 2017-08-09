@@ -61,7 +61,7 @@ class IntermittentFastingViewModel:ViewModel(){
         edit?.putString(context.resources.getString(R.string.last_fast_end), date)
         if(fastStart!=null){
             Single.fromCallable {
-                myDatabase.IntermittentFastingDAO().insert(FastPeriod(fastStart as Date, Calendar.getInstance().time))
+                myDatabase.intermittentFastingDAO().insert(FastPeriod(fastStart as Date, Calendar.getInstance().time))
             }.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe()
         }

@@ -20,28 +20,32 @@ class RecipeAdapterDelegate(private val onRecipeTeaserClickListener: OnRecipeTea
         return item is Recipe
     }
 
-    override fun onBindViewHolder(item: Recipe, viewHolder: RecipeViewHolder, payloads: MutableList<Any>) {
-        viewHolder.recipe = item
-        viewHolder.recipeTitle.text = item.name
-        viewHolder.previewImgUrl = item.imageURL
-        viewHolder.teaserImage.loadImg(item.imageURL ?: "")
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup): RecipeViewHolder {
         val view = parent.inflate(R.layout.recipe_teaser, false)
         return RecipeViewHolder(view, onRecipeTeaserClickListener, isShowingFavorites)
     }
 
+    override fun onBindViewHolder(item: Recipe, viewHolder: RecipeViewHolder, payloads: MutableList<Any>) {
+        viewHolder.recipe = item
+        viewHolder.recipeTitle.text = item.name
+        viewHolder.teaserImage.loadImg(item.imageURL ?: "")
+        viewHolder.setFavoriteBtn(item.isFavorite)
+    }
+
+
     inner class RecipeViewHolder(itemView: View, val onRecipeTeaserActionListener: OnRecipeTeaserActionListener, isShowingFavorites: Boolean) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         var recipe: Recipe? = null
+        //views
         var recipeTitle: TextView
         var teaserImage: ImageView
-        var previewImgUrl: String? = null
         var cartBtn: ImageButton
         var favoriteBtn: ImageButton
+
+        //state
         var isFavorite: Boolean = false
         var isInShoppingCart: Boolean = false
+        //resources
         var resources: Resources
 
         init {
@@ -54,56 +58,16 @@ class RecipeAdapterDelegate(private val onRecipeTeaserClickListener: OnRecipeTea
             cartBtn.setOnClickListener(this)
             favoriteBtn = itemView.findViewById(R.id.recipe_teaser_favorite_btn) as ImageButton
             favoriteBtn.setOnClickListener(this)
-            if (isShowingFavorites) {
-                isFavorite = true
-                toggleFavoriteBtnColor()
-            }
         }
 
         override fun onClick(v: View?) {
             when (v) {
                 favoriteBtn -> {
-                    toggleFavorite(recipe as Recipe)
-
-//                    val growAnim: ScaleAnimation = ScaleAnimation(1f, 1f, 0f, 1f)
-//                    val shrinkAnim: ScaleAnimation = ScaleAnimation(1f, 1f, 1f, 0f)
-//
-//
-//                    growAnim.setDuration(2000);
-//                    shrinkAnim.setDuration(2000);
-//
-//                    teaserImage.setAnimation(growAnim);
-//                    growAnim.start();
-//
-//                    growAnim.setAnimationListener(object : Animation.AnimationListener {
-//                        override fun onAnimationRepeat(animation: Animation?) {
-//                        }
-//
-//                        override fun onAnimationEnd(animation: Animation?) {
-//                            teaserImage.setAnimation(shrinkAnim);
-//                            shrinkAnim.start();
-//                        }
-//
-//                        override fun onAnimationStart(animation: Animation?) {
-//                        }
-//                    })
-//                    shrinkAnim.setAnimationListener(object : Animation.AnimationListener {
-//                        override fun onAnimationRepeat(animation: Animation?) {
-//                        }
-//
-//                        override fun onAnimationEnd(animation: Animation?) {
-//                            teaserImage.setAnimation(growAnim);
-//                            growAnim.start();
-//                        }
-//
-//                        override fun onAnimationStart(animation: Animation?) {
-//                        }
-//1
-//                    })
+                    onFavoriteBtnClicked()
                     return
                 }
                 cartBtn -> {
-                    onAddToShoppingCart(recipe as Recipe)
+                    onShoppingListBtnClicked()
                     return
                 }
                 teaserImage -> {
@@ -113,29 +77,34 @@ class RecipeAdapterDelegate(private val onRecipeTeaserClickListener: OnRecipeTea
             }
         }
 
-        fun toggleFavorite(recipe: Recipe) {
-            isFavorite = !isFavorite
-            toggleFavoriteBtnColor()
-            if (isFavorite) onRecipeTeaserActionListener.onAddToFavorites(recipe) else onRecipeTeaserActionListener.onRemoveFromFavorites(recipe)
+        private fun onFavoriteBtnClicked() {
+            setFavoriteBtn(!isFavorite)
+            if (isFavorite) onRecipeTeaserActionListener.onAddToFavorites(recipe as Recipe) else onRecipeTeaserActionListener.onRemoveFromFavorites(recipe as Recipe)
         }
 
-        private fun toggleFavoriteBtnColor() {
-            favoriteBtn.setImageResource(if (isFavorite) R.mipmap.ic_favorite_black_24dp else R.mipmap.ic_favorite_border_black_24dp)
-            favoriteBtn.setColorFilter(if (isFavorite) resources.getColor(R.color.darkRed) else resources.getColor(R.color.grey))
-        }
-
-        fun onAddToShoppingCart(recipe: Recipe) {
+        fun onShoppingListBtnClicked() {
             val resources = itemView.resources
             isInShoppingCart = !isInShoppingCart
             cartBtn.setColorFilter(if (isInShoppingCart) resources.getColor(R.color.darkGreen) else resources.getColor(R.color.grey))
-            onRecipeTeaserActionListener.onAddToShoppingCart(recipe)
+            if (isInShoppingCart) onRecipeTeaserActionListener.onAddToShoppingList(recipe as Recipe) else
+                onRecipeTeaserActionListener.onRemoveFromShoppingList(recipe as Recipe)
+        }
+
+        fun setFavoriteBtn(isFavorite: Boolean) {
+            this.isFavorite = isFavorite
+            favoriteBtn.setImageResource(if (isFavorite) R.mipmap.ic_favorite_black_24dp else R.mipmap.ic_favorite_border_black_24dp)
+            favoriteBtn.setColorFilter(if (isFavorite) resources.getColor(R.color.darkRed) else resources.getColor(R.color.grey))
         }
     }
 
+    /**
+     *
+     */
     interface OnRecipeTeaserActionListener {
         fun onAddToFavorites(recipe: Recipe)
         fun onRemoveFromFavorites(recipe: Recipe)
-        fun onAddToShoppingCart(recipe: Recipe)
+        fun onAddToShoppingList(recipe: Recipe)
+        fun onRemoveFromShoppingList(recipe: Recipe)
         fun showRecipeDetail(recipe: Recipe)
     }
 

@@ -42,9 +42,9 @@ class FavoritesFragment : LifecycleFragment(), RecipeAdapterDelegate.OnRecipeTea
                 for(recipeWithIngs:RecipeWithIngredients in recipesWithIngredients){
                     recipeWithIngs.recipe.ingredients =recipeWithIngs.ingredients
                     recipes.add(recipeWithIngs.recipe)
-                }
+
                 initAdapter(recipes)
-            }
+            }}
         })
     }
 
@@ -64,10 +64,14 @@ class FavoritesFragment : LifecycleFragment(), RecipeAdapterDelegate.OnRecipeTea
          //
     }
 
-    override fun onAddToShoppingCart(recipe:Recipe) {
+    override fun onAddToShoppingList(recipe:Recipe) {
         viewModel?.getFavorites()?.observe(this, Observer{recipes->
             Log.d("Andrea", "recipes")
         })
+    }
+
+    override fun onRemoveFromShoppingList(recipe: Recipe) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun showRecipeDetail(recipe: Recipe) {

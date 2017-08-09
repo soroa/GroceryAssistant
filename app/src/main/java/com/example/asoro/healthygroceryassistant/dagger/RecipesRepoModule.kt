@@ -1,7 +1,7 @@
 package com.example.asoro.healthygroceryassistant.dagger
 
-import com.example.asoro.healthygroceryassistant.RecipesAPIService
-import com.example.asoro.healthygroceryassistant.RecipesRepo
+import com.example.asoro.healthygroceryassistant.remote.RecipesAPIService
+import com.example.asoro.healthygroceryassistant.remote.RecipesRepo
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -17,7 +17,7 @@ class RecipesRepoModule {
 
     @ApplicationScope
     @Provides
-    fun recipesRepo(recipesAPIService: RecipesAPIService):RecipesRepo{
+    fun recipesRepo(recipesAPIService: RecipesAPIService): RecipesRepo {
         return RecipesRepo(recipesAPIService)
     }
 
