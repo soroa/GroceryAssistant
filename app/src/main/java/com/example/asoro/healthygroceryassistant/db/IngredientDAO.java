@@ -18,10 +18,13 @@ public interface IngredientDAO {
 	@Query("SELECT * FROM ingredient")
 	LiveData<List<Ingredient>> getAll();
 
+	@Query("SELECT * FROM ingredient WHERE isOnShoppingList = 1")
+	LiveData<List<Ingredient>> getAllOnShoppingList();
+
 	@Query("SELECT * FROM ingredient WHERE recipeUri = :rUri")
 	LiveData<List<Ingredient>> getAllByRecipeId(String rUri);
 
-	@Insert
+	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	void insert(Ingredient ingredient);
 
 	@Update

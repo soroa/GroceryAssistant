@@ -8,10 +8,10 @@ import com.example.asoro.healthygroceryassistant.loadImg
 import com.example.asoro.healthygroceryassistant.model.Recipe
 import kotlinx.android.synthetic.main.activity_recipe_detail.*
 
-class RecipeDetailActivity: AppCompatActivity() {
-    private var recipe:Recipe? =null
+class RecipeDetailActivity : AppCompatActivity() {
+    private var recipe: Recipe? = null
     private var viewModel: RecipeDetailViewModel? = null
-    private var isFavorite:Boolean = false
+    private var isFavorite: Boolean = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,17 +23,27 @@ class RecipeDetailActivity: AppCompatActivity() {
         recipe = intent.getSerializableExtra("recipe") as Recipe
         teaser_preview_details.loadImg(recipe?.imageURL!!)
         recipe_title.setText(recipe?.name)
+        setIngredients()
+        recipe_url.setText(recipe?.url)
+
+        isFavorite = recipe?.isFavorite as Boolean
+        updateFavoriteButtonColor()
+        favorite_btn.setOnClickListener { v ->
+            isFavorite = !isFavorite
+            updateFavoriteButtonColor()
+            if (isFavorite) viewModel?.addToFavorite(recipe as Recipe) else viewModel?.removeFromFavorites(recipe as Recipe)
+        }
+    }
+
+    private fun updateFavoriteButtonColor() {
+        favorite_btn.setColorFilter(if (isFavorite) resources.getColor(R.color.darkRed) else resources.getColor(R.color.primary_dark_material_dark))
+    }
+
+    private fun setIngredients(){
         var ingredients = ""
-        for(i in recipe?.ingredients!!){
+        for (i in recipe?.ingredients!!) {
             ingredients = ingredients + i.text + " \n"
         }
         recipe_ingredients.setText(ingredients)
-        recipe_url.setText(recipe?.url)
-
-        favorite_btn.setOnClickListener{ v ->
-            isFavorite = !isFavorite
-            favorite_btn.setColorFilter(if (isFavorite) resources.getColor(R.color.darkRed) else resources.getColor(R.color.primary_dark_material_dark))
-            if(isFavorite) viewModel?.addToFavorite(recipe as Recipe) else viewModel?.removeFromFavorites(recipe as Recipe)
-        }
     }
 }

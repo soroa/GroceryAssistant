@@ -10,9 +10,6 @@ import java.io.Serializable
 @Entity
 class Ingredient : Serializable, Teasable {
     @PrimaryKey
-    @SerializedName("uri")
-    var uri: String? = null
-
     @SerializedName("text")
     var text: String? = null
         set

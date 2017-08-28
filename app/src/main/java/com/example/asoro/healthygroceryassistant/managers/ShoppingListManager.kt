@@ -25,7 +25,7 @@ class ShoppingListManager {
     fun addRecipeToShoppingList(recipe: Recipe) {
         recipe.ingredients?.forEach {
             it.recipeUri = recipe.uri
-            it.isOnShoppingList=true
+            it.isOnShoppingList = true
         }
         recipe.isOnShoppingList = true
 
@@ -41,31 +41,40 @@ class ShoppingListManager {
     /**
      *
      */
-    fun removeRecipeFromShoppingList(recipe:Recipe){
+    fun removeRecipeFromShoppingList(recipe: Recipe) {
         recipe.isOnShoppingList = false
-        if(recipe.isFavorite){
-            db.recipesDao().updateRecipe(recipe)
-        }else{
-            db.recipesDao().delete(recipe)
-        }
-        Single.fromCallable {
-            db.recipesDao().insert(recipe)
-            db.ingredientDAO().insertAll(recipe.ingredients!!)
-        }//
-                .subscribeOn(Schedulers.io())//
-                .observeOn(AndroidSchedulers.mainThread())//
-                .subscribe()
+        if (recipe.isFavorite) {
+            Single.fromCallable {
+                db.recipesDao().updateRecipe(recipe)
+            }.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread()).subscribe()
+            Single.fromCallable {
+                for(ingredient in recipe.ingredients!!){
+                    ingredient.isOnShoppingList = false
+                    db.ingredientDAO().updateIngredient(ingredient)
+                }
+            }.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread()).subscribe()
 
+        } else {
+            Single.fromCallable {
+                db.recipesDao().delete(recipe)
+            }.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread()).subscribe()
+
+        }
     }
-    fun removeFromFavorites(ingredient: Ingredient) {
+
+    fun removeIngredientFromShoppingList(ingredient: Ingredient) {
+        ingredient.isOnShoppingList = false
         Single.fromCallable {
-            db.ingredientDAO().delete(ingredient)
+            db.ingredientDAO().updateIngredient(ingredient)
         }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe()
     }
 
-    fun getFavorites(): LiveData<List<Ingredient>> {
-        return db.ingredientDAO().getAll()
+    fun getAllShoppingListItems(): LiveData<List<Ingredient>> {
+        return db.ingredientDAO().allOnShoppingList
     }
 
 }

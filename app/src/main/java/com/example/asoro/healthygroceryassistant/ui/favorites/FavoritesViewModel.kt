@@ -28,4 +28,12 @@ class FavoritesViewModel:ViewModel() {
         return favoriteManager.getFavorites()
     }
 
+    fun addRecipeToShoppingList(recipe:Recipe){
+        shoppingListManager.addRecipeToShoppingList(recipe)
+    }
+
+    fun removeRecipeFromShoppingList(recipe:Recipe){
+        shoppingListManager.removeRecipeFromShoppingList(recipe)
+    }
+
 }

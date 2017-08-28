@@ -1,7 +1,10 @@
 package com.example.asoro.healthygroceryassistant.ui.adapters
 
 import android.content.res.Resources
+import android.support.v4.view.GestureDetectorCompat
 import android.support.v7.widget.RecyclerView
+import android.view.GestureDetector
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
@@ -14,7 +17,7 @@ import com.example.asoro.healthygroceryassistant.model.Recipe
 import com.hannesdorfmann.adapterdelegates3.AbsListItemAdapterDelegate
 
 
-class RecipeAdapterDelegate(private val onRecipeTeaserClickListener: OnRecipeTeaserActionListener, private val isShowingFavorites: Boolean) : AbsListItemAdapterDelegate<Recipe, Recipe, RecipeAdapterDelegate.RecipeViewHolder>() {
+class RecipeAdapterDelegate(private val onRecipeTeaserClickListener: OnRecipeTeaserActionListener) : AbsListItemAdapterDelegate<Recipe, Recipe, RecipeAdapterDelegate.RecipeViewHolder>() {
 
     override fun isForViewType(item: Recipe, items: MutableList<Recipe>, position: Int): Boolean {
         return item is Recipe
@@ -22,7 +25,7 @@ class RecipeAdapterDelegate(private val onRecipeTeaserClickListener: OnRecipeTea
 
     override fun onCreateViewHolder(parent: ViewGroup): RecipeViewHolder {
         val view = parent.inflate(R.layout.recipe_teaser, false)
-        return RecipeViewHolder(view, onRecipeTeaserClickListener, isShowingFavorites)
+        return RecipeViewHolder(view, onRecipeTeaserClickListener)
     }
 
     override fun onBindViewHolder(item: Recipe, viewHolder: RecipeViewHolder, payloads: MutableList<Any>) {
@@ -30,23 +33,25 @@ class RecipeAdapterDelegate(private val onRecipeTeaserClickListener: OnRecipeTea
         viewHolder.recipeTitle.text = item.name
         viewHolder.teaserImage.loadImg(item.imageURL ?: "")
         viewHolder.setFavoriteBtn(item.isFavorite)
+        viewHolder.setShoppingCartButton(item.isOnShoppingList)
     }
 
 
-    inner class RecipeViewHolder(itemView: View, val onRecipeTeaserActionListener: OnRecipeTeaserActionListener, isShowingFavorites: Boolean) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-
+    inner class RecipeViewHolder(itemView: View, val onRecipeTeaserActionListener: OnRecipeTeaserActionListener) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         var recipe: Recipe? = null
+
         //views
         var recipeTitle: TextView
         var teaserImage: ImageView
         var cartBtn: ImageButton
         var favoriteBtn: ImageButton
-
         //state
         var isFavorite: Boolean = false
+
         var isInShoppingCart: Boolean = false
         //resources
         var resources: Resources
+        private var getureDetector: GestureDetectorCompat
 
         init {
             itemView.setOnClickListener(this)
@@ -58,6 +63,8 @@ class RecipeAdapterDelegate(private val onRecipeTeaserClickListener: OnRecipeTea
             cartBtn.setOnClickListener(this)
             favoriteBtn = itemView.findViewById(R.id.recipe_teaser_favorite_btn) as ImageButton
             favoriteBtn.setOnClickListener(this)
+
+            getureDetector = GestureDetectorCompat(itemView.context, MyGestureListener())
         }
 
         override fun onClick(v: View?) {
@@ -95,6 +102,12 @@ class RecipeAdapterDelegate(private val onRecipeTeaserClickListener: OnRecipeTea
             favoriteBtn.setImageResource(if (isFavorite) R.mipmap.ic_favorite_black_24dp else R.mipmap.ic_favorite_border_black_24dp)
             favoriteBtn.setColorFilter(if (isFavorite) resources.getColor(R.color.darkRed) else resources.getColor(R.color.grey))
         }
+
+        fun setShoppingCartButton(isOnShoppingList: Boolean) {
+            this.isInShoppingCart = isOnShoppingList
+            cartBtn.setColorFilter(if (isInShoppingCart) resources.getColor(R.color.darkGreen) else resources.getColor(R.color.grey))
+        }
+
     }
 
     /**
@@ -108,4 +121,17 @@ class RecipeAdapterDelegate(private val onRecipeTeaserClickListener: OnRecipeTea
         fun showRecipeDetail(recipe: Recipe)
     }
 
+    internal inner class MyGestureListener : GestureDetector.SimpleOnGestureListener() {
+
+        override fun onDown(event: MotionEvent): Boolean {
+            return true
+        }
+
+        override fun onFling(event1: MotionEvent, event2: MotionEvent,
+                             velocityX: Float, velocityY: Float): Boolean {
+
+            return true
+        }
+
+    }
 }

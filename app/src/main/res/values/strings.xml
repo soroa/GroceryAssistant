@@ -18,7 +18,7 @@
     <string name="vegan">vegan</string>
     <string name="vegetarian">vsegetarian</string>
 
-    <!-- TODO: Remove or change this placeholder ingredienteCheckedView -->
+    <!-- TODO: Remove or change this placeholingredientTextView -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="last_seven_day">Last Seven Days</string>
     <string name="time_to_go">Time to go</string>

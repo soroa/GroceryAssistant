@@ -7,7 +7,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,8 +21,8 @@ import kotlinx.android.synthetic.main.fragment_favorites.*
 
 class FavoritesFragment : LifecycleFragment(), RecipeAdapterDelegate.OnRecipeTeaserActionListener {
 
-    var recipeAdapter: RecipeAdapter? = null
-    private var viewModel: FavoritesViewModel? = null
+    var mRecipeAdapter: RecipeAdapter? = null
+    private lateinit var viewModel: FavoritesViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,9 +35,9 @@ class FavoritesFragment : LifecycleFragment(), RecipeAdapterDelegate.OnRecipeTea
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(activity).get(FavoritesViewModel::class.java)
-        viewModel?.getFavorites()?.observe(this, Observer { recipesWithIngredients ->
+        viewModel.getFavorites().observe(this, Observer { recipesWithIngredients ->
             if (recipesWithIngredients != null) {
-                var recipes = ArrayList<Recipe>();
+                val recipes = ArrayList<Recipe>()
                 for(recipeWithIngs:RecipeWithIngredients in recipesWithIngredients){
                     recipeWithIngs.recipe.ingredients =recipeWithIngs.ingredients
                     recipes.add(recipeWithIngs.recipe)
@@ -49,15 +48,15 @@ class FavoritesFragment : LifecycleFragment(), RecipeAdapterDelegate.OnRecipeTea
     }
 
     private fun initAdapter(recipes: List<Recipe>) {
-        recipeAdapter = RecipeAdapter(this, recipes, true)
+        mRecipeAdapter = RecipeAdapter(this, recipes)
         val mLayoutManager = LinearLayoutManager(context)
-        favorites_rv.setLayoutManager(mLayoutManager)
-        favorites_rv.setItemAnimator(DefaultItemAnimator())
-        favorites_rv.setAdapter(recipeAdapter)
+        favorites_rv.layoutManager = mLayoutManager
+        favorites_rv.itemAnimator = DefaultItemAnimator()
+        favorites_rv.adapter = mRecipeAdapter
     }
 
     override fun onRemoveFromFavorites(recipe: Recipe) {
-        viewModel?.removeFromFavorites(recipe)
+        viewModel.removeFromFavorites(recipe)
     }
 
     override fun onAddToFavorites(recipe:Recipe) {
@@ -65,17 +64,16 @@ class FavoritesFragment : LifecycleFragment(), RecipeAdapterDelegate.OnRecipeTea
     }
 
     override fun onAddToShoppingList(recipe:Recipe) {
-        viewModel?.getFavorites()?.observe(this, Observer{recipes->
-            Log.d("Andrea", "recipes")
-        })
-    }
+        viewModel.addRecipeToShoppingList(recipe)
+        }
 
     override fun onRemoveFromShoppingList(recipe: Recipe) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        viewModel.removeRecipeFromShoppingList(recipe)
+
     }
 
     override fun showRecipeDetail(recipe: Recipe) {
-        var intent: Intent = Intent(context, RecipeDetailActivity::class.java)
+        val intent = Intent(context, RecipeDetailActivity::class.java)
         intent.putExtra("recipe", recipe)
         startActivity(intent)
     }

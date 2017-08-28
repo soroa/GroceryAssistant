@@ -21,9 +21,10 @@ import kotlinx.android.synthetic.main.fragment_recipes_search_results.*
 
 class SearchResultsFragment : LifecycleFragment(), SearchResultsView, RecipeAdapterDelegate.OnRecipeTeaserActionListener {
 
-    var recipeAdapter: RecipeAdapter? = null
+    var mRecipeAdapter: RecipeAdapter? = null
     private lateinit var viewModel: SearchViewModel
 
+    //Lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -38,8 +39,10 @@ class SearchResultsFragment : LifecycleFragment(), SearchResultsView, RecipeAdap
         initAdapter()
     }
 
+    // UI Contract Functions
+
     override fun showRecipes(recipes: List<Recipe>) {
-        recipeAdapter?.notifyDataSetChanged()
+        mRecipeAdapter?.notifyDataSetChanged()
     }
 
     override fun showRecipeDetail(recipe: Recipe) {
@@ -47,6 +50,8 @@ class SearchResultsFragment : LifecycleFragment(), SearchResultsView, RecipeAdap
         intent.putExtra("recipe", recipe)
         startActivity(intent)
     }
+
+    // Callbacks
 
     override fun onRemoveFromFavorites(recipe: Recipe) {
         viewModel.removeFromFavorites(recipe)
@@ -65,11 +70,10 @@ class SearchResultsFragment : LifecycleFragment(), SearchResultsView, RecipeAdap
     }
 
     private fun initAdapter() {
-        recipeAdapter = RecipeAdapter(this, viewModel.recipes?.value as List<Recipe>, false)
+        mRecipeAdapter = RecipeAdapter(this, viewModel.recipes?.value as List<Recipe>)
         val mLayoutManager = LinearLayoutManager(context)
         recipes_search_results_rv.layoutManager = mLayoutManager
         recipes_search_results_rv.itemAnimator = DefaultItemAnimator()
-        recipes_search_results_rv.adapter = recipeAdapter
+        recipes_search_results_rv.adapter = mRecipeAdapter
     }
-
 }

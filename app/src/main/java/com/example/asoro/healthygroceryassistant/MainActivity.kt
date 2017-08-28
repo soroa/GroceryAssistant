@@ -15,6 +15,7 @@ import com.example.asoro.healthygroceryassistant.ui.favorites.FavoritesFragment
 import com.example.asoro.healthygroceryassistant.ui.intermittent_fasting.IntermittentFastingActivity
 import com.example.asoro.healthygroceryassistant.ui.search.SearchFragment
 import com.example.asoro.healthygroceryassistant.ui.search_results.SearchResultsFragment
+import com.example.asoro.healthygroceryassistant.ui.shopping_list.ShoppingListFragment
 
 class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, SearchFragment.OnRecipeSearchEvent {
 
@@ -59,7 +60,6 @@ class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         return super.onOptionsItemSelected(item)
     }
 
-
     private fun loadFragment(f: Fragment) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.setCustomAnimations(
@@ -76,6 +76,7 @@ class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         } else if (id == R.id.favorites) {
             loadFragment(FavoritesFragment())
         } else if (id == R.id.shopping_list) {
+            loadFragment(ShoppingListFragment())
         } else if (id == R.id.intermittent_fasting) {
             val intent: Intent = Intent(this, IntermittentFastingActivity::class.java)
             startActivity(intent)
